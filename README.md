@@ -13,7 +13,7 @@ Understand how a computer works behind the curtains and maybe do some things my 
 ## Run
 1. Run circuit software
 ```sh
-java -jar logisim-generic-2.7.1.jar
+java -jar logisim-evolution.jar
 ```
 2. File -> Open -> Select main.circ
 3. Open Main
