@@ -1,19 +1,34 @@
-# Basic-Computer-with-Circuits
-Creating a basic computer using only the following components: clock and AND/OR/XOR ports.
+# Computer-from-Scratch
+Designing a computer from scratch. The only components that I didn't made were the ports.
 
-# About computer
+#### Todo
+- [ ] Control Unit
+- [ ] Signed integer
+- [ ] Float
+- [ ] Division
+
+## Objective
+Understand how a computer works behind the curtains and maybe do some things my way.
+
+## Run
+1. Run circuit software
+```sh
+java -jar logisim-generic-2.7.1.jar
+```
+2. File -> Open -> Select main.circ
+3. Open Main
+4. Program - [How do I program this computer?](#code)
+
+## How does a computer work?
 ### Internal components
 - CPU
   - Control Unit (CU)
   - Arithmetic Logic Unit (ALU)
-  - Registers:
-    - PC
-    - AC
-    - EE
+  - Registers: PC, AC, EE
 - RAM
 - Clock
 
-### How does it work?
+### Code
 The code should be written in RAM and it will be executed from the memmory address in register CP content. Every 4 bytes are considered a line of code.
 <br/>Line of code = Instruction (2 bytes) + Memory Address (2 bytes).
 ps: The memory address in the lines of code will be called EE - [EE] represents EE value and EE
@@ -35,9 +50,4 @@ Code (hexadecimal number) | Description
 ##### Example
 ```sh
 01ff #copy value in the address ff in RAM
-```
-
-## Run
-```sh
-java -jar logisim-generic-2.7.1.jar
 ```
