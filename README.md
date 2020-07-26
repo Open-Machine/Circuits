@@ -2,6 +2,10 @@
 Designing a computer from scratch. The only components that I didn't made were the ports.
 
 #### Todo
+*Unsigned 1 byte*
+- [X] ULA
+- [ ] Clock
+- [ ] RAM
 - [ ] Control Unit
 - [ ] Signed integer
 - [ ] Float
