@@ -1,57 +1,67 @@
 package core
 
 import (
-	"assembler/config"
 	"assembler/data"
+	"assembler/errors"
 	"assembler/utils"
 	"strings"
 )
 
 type commandConfig struct {
 	code     int
-	getParam func(words []string) (int, error)
+	getParam func(commandName string, words []string) (int, *errors.CustomError)
 }
 
-func AssembleCommand(line string) (*data.Command, error) {
+func AssembleCommand(line string) (*data.Command, *errors.CustomError) {
 	arrayWords := strings.Split(line, " ")
 	commandName := arrayWords[0]
 
 	commandConfig, exists := commands[commandName]
 	if !exists {
-		return nil, config.CommandDoesNotExistError
+		err := errors.CommandDoesNotExistError(commandName)
+		return nil, errors.NewCustomError(err, errors.CodeError)
 	}
 
-	param, paramErr := commandConfig.getParam(arrayWords)
+	param, paramErr := commandConfig.getParam(commandName, arrayWords)
 	if paramErr != nil {
 		return nil, paramErr
 	}
 
-	commandPointer, err := data.NewCommand(commandConfig.code, param)
-	return commandPointer, err
+	commandPointer, customErr := data.NewCommand(commandConfig.code, param)
+	return commandPointer, customErr
 }
 
-func getParamNoParam(words []string) (int, error) {
+func getParamNoParam(commandName string, words []string) (int, *errors.CustomError) {
 	if len(words) != 1 {
-		return 0, config.TooManyParamsError
+		remainingParams := getCommandParams(words)
+		err := errors.WrongNumberOfParamsError(commandName, 0, len(remainingParams), remainingParams)
+		return 0, errors.NewCustomError(err, errors.CodeError)
 	}
 
 	return 0, nil
 }
 
-func getSecondWord(words []string) (int, error) {
+func getSecondWord(commandName string, words []string) (int, *errors.CustomError) {
 	if len(words) != 2 {
 		if len(words) < 2 {
-			return 0, config.MissingParamsError
+			err := errors.WrongNumberOfParamsError(commandName, 1, 0, []string{})
+			return 0, errors.NewCustomError(err, errors.CodeError)
 		}
 
-		return 0, config.TooManyParamsError
+		remainingParams := getCommandParams(words)
+		err := errors.WrongNumberOfParamsError(commandName, 1, len(remainingParams), remainingParams)
+		return 0, errors.NewCustomError(err, errors.CodeError)
 	}
 
 	num, err := utils.StrToPositiveInt(words[1])
 	if err != nil {
-		return 0, err
+		return 0, errors.NewCustomError(err, errors.CodeError)
 	}
-	return num, err
+	return num, nil
+}
+
+func getCommandParams(words []string) []string {
+	return words[1:]
 }
 
 var commands = map[string]commandConfig{

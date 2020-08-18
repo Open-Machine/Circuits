@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetNoParam(t *testing.T) {
-	got, err := getParamNoParam([]string{"nop"})
+	got, err := getParamNoParam("nop", []string{"nop"})
 	if !(err == nil && got == 0) {
 		t.Errorf("Wrong")
 	}
@@ -39,7 +39,7 @@ func TestGetSecondParam(t *testing.T) {
 
 	for _, test := range tests {
 		arrayWords := strings.Split(test.line, " ")
-		got, err := getSecondWord(arrayWords)
+		got, err := getSecondWord(arrayWords[0], arrayWords)
 		gotError := err != nil
 
 		if !(test.expected == got && test.expectsErr == gotError) {
@@ -101,4 +101,12 @@ func TestAssembleCommand(t *testing.T) {
 func getCommand(code int, param int) *data.Command {
 	cmd, _ := data.NewCommand(code, param)
 	return cmd
+}
+
+func TestGetCommandParams(t *testing.T) {
+	expected := []string{"0x1", "1"}
+	got := getCommandParams([]string{"mov", "0x1", "1"})
+	if !reflect.DeepEqual(got, expected) {
+		t.Errorf("Error")
+	}
 }

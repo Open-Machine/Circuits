@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"assembler/errors"
 	"strconv"
 )
 
@@ -23,7 +23,7 @@ func IntToStrHex(num int, strLength int) (string, error) {
 	hexStr := strconv.FormatInt(int64(num), 16)
 
 	if len(hexStr) > strLength {
-		return "", fmt.Errorf("Number %d cannot be converted to hexadecimal string of length %d. Got: '%s'", num, strLength, hexStr)
+		return "", errors.InvalidParamError(num, strLength, hexStr)
 	}
 
 	for len(hexStr) < strLength {

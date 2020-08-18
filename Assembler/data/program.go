@@ -1,26 +1,25 @@
 package data
 
 type Program struct {
-	commandLines []CommandLine
+	commands []Command
 }
 
 func NewProgram(lines int) Program {
-	return Program{commandLines: make([]CommandLine, 0, lines)}
+	return Program{commands: make([]Command, 0, lines)}
 }
 
-func (p *Program) AddCommand(line int, command Command) {
-	p.commandLines = append(p.commandLines, newCommandLine(line, command))
+func (p *Program) AddCommand(command Command) {
+	p.commands = append(p.commands, command)
 }
 
-func (p *Program) ToExecuter() (string, []LineError) {
+func (p *Program) ToExecuter() (string, []error) {
 	str := ""
-	errors := make([]LineError, 0)
+	errors := make([]error, 0)
 
-	for _, commandLine := range p.commandLines {
-		executerCode, err := commandLine.command.toExecuter()
+	for _, command := range p.commands {
+		executerCode, err := command.toExecuter()
 		if err != nil {
-			lineErr := newLineError(commandLine.lineIndex, err)
-			errors = append(errors, lineErr)
+			errors = append(errors, err)
 		}
 
 		str += executerCode

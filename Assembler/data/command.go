@@ -2,6 +2,7 @@ package data
 
 import (
 	"assembler/config"
+	"assembler/errors"
 	"assembler/utils"
 )
 
@@ -10,12 +11,14 @@ type Command struct {
 	parameter   int
 }
 
-func NewCommand(code int, param int) (*Command, error) {
+func NewCommand(code int, param int) (*Command, *errors.CustomError) {
 	if utils.IsOverflow(uint(code), config.AmntBitsCode) {
-		return nil, config.MissingBitsCmdCodeError
+		err := errors.CommandCodeOverflow(code, config.AmntBitsCode)
+		return nil, errors.NewCustomError(err, errors.AssemblerError)
 	}
 	if utils.IsOverflow(uint(param), config.AmntBitsParam) {
-		return nil, config.CmdCodeOverflowError
+		err := errors.ParamOverflow(param, config.AmntBitsParam)
+		return nil, errors.NewCustomError(err, errors.CodeError)
 	}
 
 	return &Command{code, param}, nil
