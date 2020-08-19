@@ -9,7 +9,7 @@ func TestAddCommand(t *testing.T) {
 		t.Errorf("Expected length 0, got: %d", len(program.commands))
 	}
 
-	program.AddCommand(Command{0, 0})
+	program.AddCommand(Command{0, NewIntParam(0)})
 
 	if len(program.commands) != 1 {
 		t.Errorf("Expected length 1, got: %d", len(program.commands))
@@ -18,9 +18,9 @@ func TestAddCommand(t *testing.T) {
 
 func TestToExecuterSuccess(t *testing.T) {
 	program := NewProgram(3)
-	program.AddCommand(Command{1, 2})
-	program.AddCommand(Command{15, 7})
-	program.AddCommand(Command{0, 0})
+	program.AddCommand(Command{1, NewIntParam(2)})
+	program.AddCommand(Command{15, NewIntParam(7)})
+	program.AddCommand(Command{0, NewIntParam(0)})
 
 	got, errors := program.ToExecuter()
 	expected := "01020f070000"
@@ -32,9 +32,9 @@ func TestToExecuterSuccess(t *testing.T) {
 
 func TestToExecuterFail(t *testing.T) {
 	program := NewProgram(3)
-	program.AddCommand(Command{1, 2})
-	program.AddCommand(Command{1200, 7})
-	program.AddCommand(Command{0, 0})
+	program.AddCommand(Command{1, NewIntParam(2)})
+	program.AddCommand(Command{1200, NewIntParam(7)})
+	program.AddCommand(Command{0, NewIntParam(0)})
 
 	execCode, errors := program.ToExecuter()
 

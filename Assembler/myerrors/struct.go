@@ -1,4 +1,4 @@
-package errors
+package myerrors
 
 type CustomError struct {
 	s       string

@@ -22,7 +22,7 @@ func TestNewCommandOverflowValidation(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		_, err := NewCommand(test.code, test.param)
+		_, err := NewCommand(test.code, NewIntParam(test.param))
 		gotErr := err != nil
 
 		if test.expectsError != gotErr {
@@ -36,13 +36,13 @@ func TestNewCommandTest(t *testing.T) {
 	defer func() { config.Testing = oldTesting }()
 
 	config.Testing = false
-	ptrCommandNil := NewCommandTest(1, 1)
+	ptrCommandNil := NewCommandTest(1, NewIntParam(1))
 	if ptrCommandNil != nil {
 		t.Errorf("Expected nil command, got not nil command")
 	}
 
 	config.Testing = true
-	ptrCommandNotNil := NewCommandTest(1, 1)
+	ptrCommandNotNil := NewCommandTest(1, NewIntParam(1))
 	if ptrCommandNotNil == nil {
 		t.Errorf("Expected nil command, got not nil command")
 	}

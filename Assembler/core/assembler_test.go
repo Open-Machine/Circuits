@@ -55,7 +55,7 @@ func TestWAssembleFile(t *testing.T) {
 		{
 			data.ProgramFromCommands([]data.Command{
 				*newCommand(0x2, 1),
-				*data.NewCommandTest(0x222, 12),
+				*data.NewCommandTest(0x222, data.NewIntParam(12)),
 				*newCommand(0xD, 115),
 			}),
 			"",
@@ -210,6 +210,6 @@ func TestAssembleEntireLine(t *testing.T) {
 }
 
 func newCommand(cmdCode int, param int) *data.Command {
-	got, _ := data.NewCommand(cmdCode, param)
+	got, _ := data.NewCommand(cmdCode, data.NewIntParam(param))
 	return got
 }

@@ -9,7 +9,7 @@ import (
 
 func TestGetNoParam(t *testing.T) {
 	got, err := getParamNoParam("nop", []string{"nop"})
-	if !(err == nil && got == 0) {
+	if !(err == nil && !got.IsStr && got.Num == 0) {
 		t.Errorf("Wrong")
 	}
 }
@@ -37,13 +37,17 @@ func TestGetSecondParam(t *testing.T) {
 		{"mov a b c", 0, true},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		arrayWords := strings.Split(test.line, " ")
-		got, err := getSecondWord(arrayWords[0], arrayWords)
+		got, err := getSecondWord(arrayWords[0], arrayWords, false)
 		gotError := err != nil
 
-		if !(test.expected == got && test.expectsErr == gotError) {
-			t.Errorf("Expected int: %d, Got int: %d // Expected error: %t, Got error: %t", test.expected, got, test.expectsErr, gotError)
+		if test.expectsErr != gotError {
+			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsErr, gotError)
+		}
+
+		if !test.expectsErr && !gotError && test.expected != got.Num {
+			t.Errorf("[%d] Expected int: %d, Got int: %d", i, test.expected, got.Num)
 		}
 	}
 }
@@ -99,7 +103,7 @@ func TestAssembleCommand(t *testing.T) {
 	}
 }
 func getCommand(code int, param int) *data.Command {
-	cmd, _ := data.NewCommand(code, param)
+	cmd, _ := data.NewCommand(code, data.NewIntParam(param))
 	return cmd
 }
 

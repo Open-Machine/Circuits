@@ -2,7 +2,7 @@ package core
 
 import (
 	"assembler/data"
-	"assembler/errors"
+	"assembler/myerrors"
 	"assembler/utils"
 	"bufio"
 	"fmt"
@@ -79,7 +79,7 @@ func programFromFile(file io.Reader) *data.Program {
 	return &program
 }
 
-func assembleEntireLine(line string) (*data.Command, *errors.CustomError) {
+func assembleEntireLine(line string) (*data.Command, *myerrors.CustomError) {
 	normalizedStr := utils.LineNormalization(line)
 
 	if normalizedStr == "" {
