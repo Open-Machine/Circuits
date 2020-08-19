@@ -8,6 +8,10 @@ func NewProgram(lines int) Program {
 	return Program{commands: make([]Command, 0, lines)}
 }
 
+func ProgramFromCommands(commands []Command) Program {
+	return Program{commands: commands}
+}
+
 func (p *Program) AddCommand(command Command) {
 	p.commands = append(p.commands, command)
 }

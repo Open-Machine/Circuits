@@ -20,7 +20,7 @@ func WrongNumberOfParamsError(command string, amntExpected int, amntReceived int
 		for i, param := range params {
 			strParameters += fmt.Sprintf("'%s'", param)
 			if i != len(params)-1 {
-				strParameters += " "
+				strParameters += ", "
 			}
 		}
 	}

@@ -1,29 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"assembler/core"
+	"assembler/utils"
+	"os"
 )
 
 func main() {
-	fmt.Println("MENU: ")
-	fmt.Println("1. Generate RAM")
-	fmt.Println("2. Create PortOr")
-
-	fmt.Print("Menu item choosen: ")
-	var item int
-	_, err := fmt.Scanf("%d", &item)
-	if err != nil {
-		log.Fatal(err)
+	argsWithoutBinaryName := os.Args[1:]
+	for i, file := range argsWithoutBinaryName {
+		core.AssembleFile(file)
+		if i != len(argsWithoutBinaryName)-1 {
+			utils.PrintlnOut("")
+			utils.PrintlnOut("")
+		}
 	}
-
-	switch item {
-	case 1:
-		break
-	case 2:
-		break
-	}
-
-	fmt.Println()
-	fmt.Println("End of execution")
 }

@@ -5,8 +5,12 @@ type CustomError struct {
 	errType int
 }
 
-func NewCustomError(e error, errType int) *CustomError {
-	return &CustomError{s: e.Error(), errType: errType}
+func NewAssemblerError(e error) *CustomError {
+	return &CustomError{s: e.Error(), errType: assemblerError}
+}
+
+func NewCodeError(e error) *CustomError {
+	return &CustomError{s: e.Error(), errType: codeError}
 }
 
 func (e *CustomError) Error() string {
@@ -14,8 +18,8 @@ func (e *CustomError) Error() string {
 }
 
 func (e *CustomError) IsCodeError() bool {
-	return e.errType == CodeError
+	return e.errType == codeError
 }
 
-const AssemblerError = 500
-const CodeError = 400
+const assemblerError = 500
+const codeError = 400

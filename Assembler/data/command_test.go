@@ -1,6 +1,9 @@
 package data
 
-import "testing"
+import (
+	"assembler/config"
+	"testing"
+)
 
 func TestNewCommandOverflowValidation(t *testing.T) {
 	var tests = []struct {
@@ -25,5 +28,22 @@ func TestNewCommandOverflowValidation(t *testing.T) {
 		if test.expectsError != gotErr {
 			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsError, gotErr)
 		}
+	}
+}
+
+func TestNewCommandTest(t *testing.T) {
+	oldTesting := config.Testing
+	defer func() { config.Testing = oldTesting }()
+
+	config.Testing = false
+	ptrCommandNil := NewCommandTest(1, 1)
+	if ptrCommandNil != nil {
+		t.Errorf("Expected nil command, got not nil command")
+	}
+
+	config.Testing = true
+	ptrCommandNotNil := NewCommandTest(1, 1)
+	if ptrCommandNotNil == nil {
+		t.Errorf("Expected nil command, got not nil command")
 	}
 }

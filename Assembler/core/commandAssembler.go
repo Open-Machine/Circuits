@@ -19,7 +19,7 @@ func AssembleCommand(line string) (*data.Command, *errors.CustomError) {
 	commandConfig, exists := commands[commandName]
 	if !exists {
 		err := errors.CommandDoesNotExistError(commandName)
-		return nil, errors.NewCustomError(err, errors.CodeError)
+		return nil, errors.NewCodeError(err)
 	}
 
 	param, paramErr := commandConfig.getParam(commandName, arrayWords)
@@ -35,7 +35,7 @@ func getParamNoParam(commandName string, words []string) (int, *errors.CustomErr
 	if len(words) != 1 {
 		remainingParams := getCommandParams(words)
 		err := errors.WrongNumberOfParamsError(commandName, 0, len(remainingParams), remainingParams)
-		return 0, errors.NewCustomError(err, errors.CodeError)
+		return 0, errors.NewCodeError(err)
 	}
 
 	return 0, nil
@@ -45,17 +45,17 @@ func getSecondWord(commandName string, words []string) (int, *errors.CustomError
 	if len(words) != 2 {
 		if len(words) < 2 {
 			err := errors.WrongNumberOfParamsError(commandName, 1, 0, []string{})
-			return 0, errors.NewCustomError(err, errors.CodeError)
+			return 0, errors.NewCodeError(err)
 		}
 
 		remainingParams := getCommandParams(words)
 		err := errors.WrongNumberOfParamsError(commandName, 1, len(remainingParams), remainingParams)
-		return 0, errors.NewCustomError(err, errors.CodeError)
+		return 0, errors.NewCodeError(err)
 	}
 
 	num, err := utils.StrToPositiveInt(words[1])
 	if err != nil {
-		return 0, errors.NewCustomError(err, errors.CodeError)
+		return 0, errors.NewCodeError(err)
 	}
 	return num, nil
 }

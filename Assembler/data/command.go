@@ -14,14 +14,21 @@ type Command struct {
 func NewCommand(code int, param int) (*Command, *errors.CustomError) {
 	if utils.IsOverflow(uint(code), config.AmntBitsCode) {
 		err := errors.CommandCodeOverflow(code, config.AmntBitsCode)
-		return nil, errors.NewCustomError(err, errors.AssemblerError)
+		return nil, errors.NewAssemblerError(err)
 	}
 	if utils.IsOverflow(uint(param), config.AmntBitsParam) {
 		err := errors.ParamOverflow(param, config.AmntBitsParam)
-		return nil, errors.NewCustomError(err, errors.CodeError)
+		return nil, errors.NewCodeError(err)
 	}
 
 	return &Command{code, param}, nil
+}
+
+func NewCommandTest(code int, param int) *Command {
+	if !config.Testing {
+		return nil
+	}
+	return &Command{code, param}
 }
 
 func (c Command) toExecuter() (string, error) {
