@@ -76,7 +76,7 @@ func getSecondWord(commandName string, words []string, acceptStringParam bool) (
 
 	strParam := words[1]
 
-	if utils.IsVariableName(strParam) {
+	if acceptStringParam && utils.IsValidVarName(strParam) {
 		param := data.NewStringParam(strParam)
 		return &param, nil
 	}

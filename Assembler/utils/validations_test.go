@@ -26,3 +26,38 @@ func TestOverflow(t *testing.T) {
 		}
 	}
 }
+
+func TestIsValidVarName(t *testing.T) {
+	var tests = []struct {
+		param    string
+		expected bool
+	}{
+		{"", false},
+		{"a", true},
+		{"var", true},
+		{"Var", true},
+		{"vaR", true},
+		{"VAR", true},
+		{"var_able", true},
+		{"var_Able", true},
+		{"var_ABLE", true},
+		{"va0r_4ABLE1", true},
+		{"va.", false},
+		{"va.r", false},
+		{"va-r", false},
+		{"va*r", false},
+		{"va^r", false},
+		{"va&r", false},
+		{"&var", false},
+		{"var&", false},
+		{"jmp", true},
+	}
+
+	for _, test := range tests {
+		got := IsValidVarName(test.param)
+
+		if test.expected != got {
+			t.Errorf("For var name '%s': Expected: %t, Got: %t", test.param, test.expected, got)
+		}
+	}
+}
