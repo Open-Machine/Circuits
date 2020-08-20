@@ -29,6 +29,10 @@ func InvalidParamLabelOrInt(param string, err error) error {
 	return fmt.Errorf("Param '%s' is not a valid label nor a valid number (Conversion error: %s)", param, err.Error())
 }
 
+func InvalidParamInt(param string, err error) error {
+	return fmt.Errorf("Param '%s' is not a valid number (Conversion error: %s)", param, err.Error())
+}
+
 func InvalidStateTransformationToExecuterError() error {
 	return errors.New("Invalid State: Cannot transform command to executer while parameter is still a label")
 }
@@ -53,6 +57,6 @@ func CommandDoesNotExistError(commandStr string) error {
 	return fmt.Errorf("Command '%s' does not exist", commandStr)
 }
 
-func InvalidParamError(num int, strLength int, hexStr string) error {
+func InvalidNumberParamParseToHexStrError(num int, strLength int, hexStr string) error {
 	return fmt.Errorf("Number %d cannot be converted to hexadecimal string of length %d. Got: '%s'", num, strLength, hexStr)
 }

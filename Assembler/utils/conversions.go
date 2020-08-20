@@ -23,7 +23,7 @@ func IntToStrHex(num int, strLength int) (string, error) {
 	hexStr := strconv.FormatInt(int64(num), 16)
 
 	if len(hexStr) > strLength {
-		return "", myerrors.InvalidParamError(num, strLength, hexStr)
+		return "", myerrors.InvalidNumberParamParseToHexStrError(num, strLength, hexStr)
 	}
 
 	for len(hexStr) < strLength {

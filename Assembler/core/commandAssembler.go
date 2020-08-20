@@ -72,7 +72,13 @@ func getSecondWord(commandName string, words []string, acceptStringParam bool) (
 	num, err := utils.StrToPositiveInt(strParam)
 
 	if err != nil {
-		return nil, myerrors.NewCodeError(myerrors.InvalidParamLabelOrInt(strParam, err))
+		var customMsgErr error
+		if acceptStringParam {
+			customMsgErr = myerrors.InvalidParamLabelOrInt(strParam, err)
+		} else {
+			customMsgErr = myerrors.InvalidParamInt(strParam, err)
+		}
+		return nil, myerrors.NewCodeError(customMsgErr)
 	}
 
 	param := data.NewIntParam(num)
