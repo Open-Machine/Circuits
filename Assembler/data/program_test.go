@@ -1,6 +1,8 @@
 package data
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestAddCommand(t *testing.T) {
 	program := NewProgram(5)
@@ -40,5 +42,26 @@ func TestToExecuterFail(t *testing.T) {
 
 	if len(errors) != 1 {
 		t.Errorf("Should result in error because of overflow. Executer code: %s // Errors: %v", execCode, errors)
+	}
+}
+
+func TestAddGotoLabel(t *testing.T) {
+	var tests = []struct {
+		program      Program
+		expectsError bool
+	}{
+		{Program{[]Command{}, map[string]int{"abc": 1, "luca": 2}}, false},
+		{Program{[]Command{}, map[string]int{"abc": 1, "label": 2}}, true},
+		{Program{[]Command{}, map[string]int{"label": 2}}, true},
+		{Program{[]Command{}, map[string]int{"a": 2}}, false},
+	}
+
+	for i, test := range tests {
+		err := test.program.AddGotoLabel("label", 1)
+		gotErr := err != nil
+
+		if test.expectsError != gotErr {
+			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsError, gotErr)
+		}
 	}
 }

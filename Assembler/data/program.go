@@ -1,19 +1,34 @@
 package data
 
+import (
+	"assembler/myerrors"
+)
+
 type Program struct {
-	commands []Command
+	commands       []Command
+	gotoLabelsDict map[string]int
 }
 
 func NewProgram(lines int) Program {
-	return Program{commands: make([]Command, 0, lines)}
+	return Program{commands: make([]Command, 0, lines), gotoLabelsDict: map[string]int{}}
 }
 
 func ProgramFromCommands(commands []Command) Program {
-	return Program{commands: commands}
+	return Program{commands: commands, gotoLabelsDict: map[string]int{}}
 }
 
 func (p *Program) AddCommand(command Command) {
 	p.commands = append(p.commands, command)
+}
+
+func (p *Program) AddGotoLabel(label string, commandIndex int) error {
+	_, exists := p.gotoLabelsDict[label]
+	if exists {
+		return myerrors.GotoLabelAlreadyExistsError(label)
+	}
+
+	p.gotoLabelsDict[label] = commandIndex
+	return nil
 }
 
 func (p *Program) ToExecuter() (string, []error) {
