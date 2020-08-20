@@ -1,7 +1,7 @@
 package core
 
 import (
-	"assembler/utils"
+	"assembler/helper"
 	"testing"
 )
 
@@ -13,24 +13,24 @@ func TestAssembleGotoLabel(t *testing.T) {
 		expectsError       bool
 	}{
 		// Success with label and rest
-		{"label:mov 12", utils.NewString("label"), "mov 12", false},
-		{"label :mov 12", utils.NewString("label"), "mov 12", false},
-		{"label: mov 12", utils.NewString("label"), "mov 12", false},
-		{"label : mov 12", utils.NewString("label"), "mov 12", false},
+		{"label:mov 12", helper.StringPointer("label"), "mov 12", false},
+		{"label :mov 12", helper.StringPointer("label"), "mov 12", false},
+		{"label: mov 12", helper.StringPointer("label"), "mov 12", false},
+		{"label : mov 12", helper.StringPointer("label"), "mov 12", false},
 		// Success without label
 		{"mov 12", nil, "mov 12", false},
 		// Success without rest
-		{"label:", utils.NewString("label"), "", false},
-		{"label :", utils.NewString("label"), "", false},
-		{"label: ", utils.NewString("label"), "", false},
-		{"label : ", utils.NewString("label"), "", false},
+		{"label:", helper.StringPointer("label"), "", false},
+		{"label :", helper.StringPointer("label"), "", false},
+		{"label: ", helper.StringPointer("label"), "", false},
+		{"label : ", helper.StringPointer("label"), "", false},
 		// Fail: Invalid name
 		{"1label : mov 12", nil, "mov 12", true},
 		{".label :mov 12", nil, "mov 12", true},
 		{": mov 12", nil, "mov 12", true},
 		// Multiple colons
 		{": mov: 12", nil, "mov: 12", true},
-		{"label: mov: 12", utils.NewString("label"), "mov: 12", false},
+		{"label: mov: 12", helper.StringPointer("label"), "mov: 12", false},
 	}
 
 	for i, test := range tests {
@@ -41,7 +41,7 @@ func TestAssembleGotoLabel(t *testing.T) {
 			t.Errorf("[%d] Expected: %t, Got: %t // param: '%s'", i, test.expectsError, gotErr, test.param)
 		}
 
-		if !utils.SafeIsEqualStrPointer(gotLabel, test.expectedLabel) {
+		if !helper.SafeIsEqualStrPointer(gotLabel, test.expectedLabel) {
 			t.Errorf("[%d] Expected: %d, Got: %d // param: '%s'", i, test.expectedLabel, gotLabel, test.param)
 		}
 

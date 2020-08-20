@@ -2,7 +2,7 @@ package main
 
 import (
 	"assembler/core"
-	"assembler/utils"
+	"assembler/helper"
 	"os"
 )
 
@@ -11,8 +11,8 @@ func main() {
 	for i, file := range argsWithoutBinaryName {
 		core.AssembleFile(file)
 		if i != len(argsWithoutBinaryName)-1 {
-			utils.PrintlnOut("")
-			utils.PrintlnOut("")
+			helper.PrintlnOut("")
+			helper.PrintlnOut("")
 		}
 	}
 }

@@ -1,8 +1,10 @@
-package utils
+package helper
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestNewString(t *testing.T) {
+func TestStringPointer(t *testing.T) {
 	var tests = []struct {
 		param string
 	}{
@@ -13,8 +15,8 @@ func TestNewString(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got := NewString(test.param)
-		if *got == test.param {
+		got := StringPointer(test.param)
+		if *got != test.param {
 			t.Errorf("Expected: '%s', Got: '%s'", test.param, *got)
 		}
 	}

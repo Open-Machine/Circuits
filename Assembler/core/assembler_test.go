@@ -3,7 +3,7 @@ package core
 import (
 	"assembler/config"
 	"assembler/data"
-	"assembler/utils"
+	"assembler/helper"
 	"bytes"
 	"reflect"
 	"strings"
@@ -15,13 +15,13 @@ func TestAssembleFile(t *testing.T) {
 }
 
 func TestProgramFromFile(t *testing.T) {
-	stdout := utils.Out
-	utils.Out = new(bytes.Buffer)
-	defer func() { utils.Out = stdout }()
+	stdout := helper.Out
+	helper.Out = new(bytes.Buffer)
+	defer func() { helper.Out = stdout }()
 
-	stderr := utils.Err
-	utils.Err = new(bytes.Buffer)
-	defer func() { utils.Err = stderr }()
+	stderr := helper.Err
+	helper.Err = new(bytes.Buffer)
+	defer func() { helper.Err = stderr }()
 
 	var tests = []struct {
 		lines      []string
@@ -81,16 +81,11 @@ func TestProgramFromFile(t *testing.T) {
 
 		got := programFromFile(strings.NewReader(str))
 
-		bothNil := test.expected == nil && got == nil
-		someNil := test.expected == nil || got == nil
-
-		if !bothNil {
-			if someNil || !reflect.DeepEqual(*test.expected, *got) {
-				t.Errorf("[%d] Expected: %v, Got: %v", i, test.expected, got)
-			}
+		if !helper.SafeIsEqualProgramPointer(test.expected, got) {
+			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expected, got)
 		}
 
-		stderrStr := utils.Err.(*bytes.Buffer).String()
+		stderrStr := helper.Err.(*bytes.Buffer).String()
 		gotErr := stderrStr != ""
 		if test.expectsErr != gotErr {
 			t.Errorf("[%d] Expected error: %t, Got error: %t // ", i, test.expectsErr, gotErr)
@@ -120,9 +115,9 @@ func TestAssembleEntireLine(t *testing.T) {
 		{"	inputa 	0x1 ", nil, nil, 1},
 		{"	inputa 	a0x1 ", nil, nil, 1},
 		// Success with label
-		{"	label: input 	0x1 ", utils.NewString("label"), newCommand(7, 1), 0},
+		{"	label: input 	0x1 ", helper.StringPointer("label"), newCommand(7, 1), 0},
 		// Fail with label
-		{"	label: inputa 	0x1 ", utils.NewString("label"), nil, 1},
+		{"	label: inputa 	0x1 ", helper.StringPointer("label"), nil, 1},
 		{"	1label: inputa 	0x1 ", nil, nil, 2},
 		{"	1label: input 	0x1 ", nil, newCommand(7, 1), 1},
 	}
@@ -130,16 +125,11 @@ func TestAssembleEntireLine(t *testing.T) {
 	for i, test := range tests {
 		gotLabel, gotCmd, errs := assembleEntireLine(test.param)
 
-		bothNil := test.expectedCmd == nil && gotCmd == nil
-		someNil := test.expectedCmd == nil || gotCmd == nil
-
-		if !bothNil {
-			if someNil || *test.expectedCmd != *gotCmd {
-				t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedCmd, gotCmd)
-			}
+		if !helper.SafeIsEqualCommandPointer(test.expectedCmd, gotCmd) {
+			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedCmd, gotCmd)
 		}
 
-		if !utils.SafeIsEqualStrPointer(gotLabel, test.expectedLabel) {
+		if !helper.SafeIsEqualStrPointer(gotLabel, test.expectedLabel) {
 			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedLabel, gotLabel)
 		}
 
@@ -150,13 +140,13 @@ func TestAssembleEntireLine(t *testing.T) {
 }
 
 func TestWriteAssembledFile(t *testing.T) {
-	stdout := utils.Out
-	utils.Out = new(bytes.Buffer)
-	defer func() { utils.Out = stdout }()
+	stdout := helper.Out
+	helper.Out = new(bytes.Buffer)
+	defer func() { helper.Out = stdout }()
 
-	stderr := utils.Err
-	utils.Err = new(bytes.Buffer)
-	defer func() { utils.Err = stderr }()
+	stderr := helper.Err
+	helper.Err = new(bytes.Buffer)
+	defer func() { helper.Err = stderr }()
 
 	oldTesting := config.Testing
 	config.Testing = true
@@ -221,7 +211,7 @@ func TestWriteAssembledFile(t *testing.T) {
 			t.Errorf("[%d] Expected file str: %v, Got file str: %v", i, test.expectedFileStr, gotFileStr)
 		}
 
-		stderrStr := utils.Err.(*bytes.Buffer).String()
+		stderrStr := helper.Err.(*bytes.Buffer).String()
 		gotErr := stderrStr != ""
 		if test.expectsErr != gotErr {
 			t.Errorf("[%d] Expected error: %t, Got error: %t // ", i, test.expectsErr, gotErr)

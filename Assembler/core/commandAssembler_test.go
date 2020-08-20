@@ -2,6 +2,7 @@ package core
 
 import (
 	"assembler/data"
+	"assembler/helper"
 	"reflect"
 	"strings"
 	"testing"
@@ -17,26 +18,26 @@ func TestGetNoParam(t *testing.T) {
 func TestGetSecondParamAsInt(t *testing.T) {
 	var tests = []struct {
 		line       string
-		expected   int
+		expected   *data.CommandParameter
 		expectsErr bool
 	}{
 		// Decimal Number
-		{"mov 1", 1, false},
+		{"mov 1", newCmdIntParam(1), false},
 		// Hexadecimal Number
-		{"mov 0x1a", 26, false},
-		{"mov 0x001", 1, false},
-		{"mov 0x0f", 15, false},
-		{"mov 0xff", 255, false},
-		{"mov 0x0ff", 255, false},
+		{"mov 0x1a", newCmdIntParam(26), false},
+		{"mov 0x001", newCmdIntParam(1), false},
+		{"mov 0x0f", newCmdIntParam(15), false},
+		{"mov 0xff", newCmdIntParam(255), false},
+		{"mov 0x0ff", newCmdIntParam(255), false},
 		// Variable
-		{"mov 0xx0ff", 0, true},
-		{"mov x1", 0, true},
-		{"mov 0x1g", 0, true},
-		{"mov 1a", 0, true},
+		{"mov 0xx0ff", nil, true},
+		{"mov x1", nil, true},
+		{"mov 0x1g", nil, true},
+		{"mov 1a", nil, true},
 		// Words
-		{"mov", 0, true},
-		{"mov a b", 0, true},
-		{"mov a b c", 0, true},
+		{"mov", nil, true},
+		{"mov a b", nil, true},
+		{"mov a b c", nil, true},
 	}
 
 	for i, test := range tests {
@@ -48,14 +49,12 @@ func TestGetSecondParamAsInt(t *testing.T) {
 			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsErr, gotError)
 		}
 
-		if !test.expectsErr && !gotError {
-			if got.IsStr {
-				t.Errorf("[%d] Expecting int parameter", i)
-			}
+		if !helper.SafeIsEqualCommandParamPointer(test.expected, got) {
+			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expected, got)
+		}
 
-			if test.expected != got.Num {
-				t.Errorf("[%d] Expected int: %d, Got int: %d", i, test.expected, got.Num)
-			}
+		if got != nil && got.IsStr {
+			t.Errorf("[%d] Expecting int parameter", i)
 		}
 	}
 }
@@ -96,13 +95,12 @@ func TestGetSecondParamAsIntOrString(t *testing.T) {
 			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsErr, gotError)
 		}
 
-		if !test.expectsErr && !gotError {
-			if got.IsStr != test.expected.IsStr {
-				t.Errorf("[%d] Expected IsStr: %t, Got IsStr: %t", i, test.expected.IsStr, got.IsStr)
-			}
-			if *test.expected != *got {
-				t.Errorf("[%d] Expected: %v, Got: %v", i, test.expected, got)
-			}
+		if !helper.SafeIsEqualCommandParamPointer(test.expected, got) {
+			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expected, got)
+		}
+
+		if got != nil && test.expected != nil && got.IsStr != test.expected.IsStr {
+			t.Errorf("[%d] Expected IsStr: %t, Got IsStr: %t", i, test.expected.IsStr, got.IsStr)
 		}
 	}
 }
@@ -166,18 +164,9 @@ func TestAssembleCommand(t *testing.T) {
 
 		if test.expectsErr != gotError {
 			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsErr, gotError)
-		} else {
-			someErrorIsNil := test.expected == nil || got == nil
-			bothErrorsAreNil := test.expected == nil && got == nil
-			if someErrorIsNil && !bothErrorsAreNil {
-				t.Errorf("Command expected is: %v, Got expected is: %v", test.expected, got)
-			}
-
-			if !someErrorIsNil {
-				if !reflect.DeepEqual(*test.expected, *got) {
-					t.Errorf("Command expected is: %v, Got expected is: %v", *test.expected, *got)
-				}
-			}
+		}
+		if !helper.SafeIsEqualCommandPointer(test.expected, got) {
+			t.Errorf("Command expected is: %v, Got expected is: %v", test.expected, got)
 		}
 	}
 }
