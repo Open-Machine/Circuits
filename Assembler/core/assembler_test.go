@@ -13,6 +13,8 @@ import (
 func TestAssembleFile(t *testing.T) {
 	// TODO: testar todos os ifs
 
+	// store LABEL (label without jump)
+
 	// repeated label (fail)
 	// {
 	// 	[]string{

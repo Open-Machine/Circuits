@@ -1,6 +1,7 @@
 package data
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -62,6 +63,175 @@ func TestAddGotoLabel(t *testing.T) {
 
 		if test.expectsError != gotErr {
 			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsError, gotErr)
+		}
+	}
+}
+
+func TestReplaceLabelsWithNumbers(t *testing.T) {
+	var tests = []struct {
+		programBefore    *Program
+		programAfter     Program
+		amntErrsExpected int
+	}{
+		// single goto label
+		{
+			&Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("label")},
+					Command{5, NewIntParam(3)},
+					Command{7, NewIntParam(3)},
+				},
+				map[string]int{"label": 3},
+			},
+			Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewIntParam(3)},
+					Command{5, NewIntParam(3)},
+					Command{7, NewIntParam(3)},
+				},
+				map[string]int{},
+			},
+			0,
+		},
+		// multiple goto labels
+		{
+			&Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("label")},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewStringParam("abc")},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{"abc": 0, "label": 0},
+			},
+			Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewIntParam(0)},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewIntParam(0)},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{},
+			},
+			0,
+		},
+		// no goto label
+		{
+			&Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{},
+			},
+			Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{},
+			},
+			0,
+		},
+		// unused goto label
+		{
+			&Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("label")},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewStringParam("abc")},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{"abc": 0, "label": 0, "abcdario": 11},
+			},
+			Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewIntParam(0)},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewIntParam(0)},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{},
+			},
+			0,
+		},
+		// Fail: goto label that does not exist
+		{
+			&Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("luca")},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewStringParam("abc")},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{"abc": 0, "label": 0, "abcdario": 11},
+			},
+			Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("luca")},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewIntParam(0)},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{"abc": 0, "label": 0, "abcdario": 11},
+			},
+			1,
+		},
+		// Fail: multiple goto labels that do not exist
+		{
+			&Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("luca")},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewStringParam("abc")},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{"label": 0, "abcdario": 11},
+			},
+			Program{
+				[]Command{
+					Command{3, NewIntParam(1)},
+					Command{1, NewStringParam("luca")},
+					Command{5, NewIntParam(3)},
+					Command{2, NewIntParam(0)},
+					Command{1, NewStringParam("abc")},
+					Command{11, NewIntParam(15)},
+				},
+				map[string]int{"label": 0, "abcdario": 11},
+			},
+			2,
+		},
+	}
+
+	for i, test := range tests {
+		errs := test.programBefore.ReplaceLabelsWithNumbers()
+
+		if test.amntErrsExpected != len(errs) {
+			t.Errorf("[%d] Expected %d errors, but got %d", i, test.amntErrsExpected, len(errs))
+		}
+
+		if !reflect.DeepEqual(*test.programBefore, test.programAfter) {
+			t.Errorf("[%d] Expected program to change to %v, but it changed to %v", i, test.programAfter, *test.programBefore)
 		}
 	}
 }

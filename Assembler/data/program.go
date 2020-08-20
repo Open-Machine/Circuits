@@ -35,6 +35,29 @@ func (p *Program) AddGotoLabel(label string, commandIndex int) error {
 	return nil
 }
 
+func (p *Program) ReplaceLabelsWithNumbers() []error {
+	errs := make([]error, 0)
+
+	for i, command := range p.commands {
+		if command.parameter.IsStr {
+			label := command.parameter.Str
+			commandIndex, exists := p.gotoLabelsDict[label]
+
+			if !exists {
+				errs = append(errs, myerrors.GotoLabelDoesNotExistError(label))
+			} else {
+				command.parameter = NewIntParam(commandIndex)
+				p.commands[i] = command
+			}
+		}
+	}
+
+	if len(errs) == 0 {
+		p.gotoLabelsDict = map[string]int{}
+	}
+	return errs
+}
+
 func (p *Program) ToExecuter() (string, []error) {
 	str := ""
 	errors := make([]error, 0)

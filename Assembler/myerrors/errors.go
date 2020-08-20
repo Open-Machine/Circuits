@@ -14,7 +14,11 @@ func ParamOverflow(param int, amntBits int) error {
 }
 
 func GotoLabelAlreadyExistsError(label string) error {
-	return fmt.Errorf("Goto label '%s' already existis", label)
+	return fmt.Errorf("Goto label '%s' already exists", label)
+}
+
+func GotoLabelDoesNotExistError(label string) error {
+	return fmt.Errorf("Goto label '%s' does not exist", label)
 }
 
 func InvalidLabelParam(label string) error {
