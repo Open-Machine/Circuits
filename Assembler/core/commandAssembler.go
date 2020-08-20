@@ -43,23 +43,11 @@ func getParamNoParam(commandName string, words []string) (*data.CommandParameter
 }
 
 func getSecondWordAsInt(commandName string, words []string) (*data.CommandParameter, *myerrors.CustomError) {
-	if len(words) != 2 {
-		if len(words) < 2 {
-			err := myerrors.WrongNumberOfParamsError(commandName, 1, 0, []string{})
-			return nil, myerrors.NewCodeError(err)
-		}
+	return getSecondWord(commandName, words, false)
+}
 
-		remainingParams := getCommandParams(words)
-		err := myerrors.WrongNumberOfParamsError(commandName, 1, len(remainingParams), remainingParams)
-		return nil, myerrors.NewCodeError(err)
-	}
-
-	num, err := utils.StrToPositiveInt(words[1])
-	if err != nil {
-		return nil, myerrors.NewCodeError(err)
-	}
-	param := data.NewIntParam(num)
-	return &param, nil
+func getSecondWordAsIntOrString(commandName string, words []string) (*data.CommandParameter, *myerrors.CustomError) {
+	return getSecondWord(commandName, words, true)
 }
 
 func getSecondWord(commandName string, words []string, acceptStringParam bool) (*data.CommandParameter, *myerrors.CustomError) {
@@ -128,19 +116,19 @@ var commands = map[string]commandConfig{
 		code:     0x9,
 	},
 	"jmp": commandConfig{
-		getParam: getSecondWordAsInt,
+		getParam: getSecondWordAsIntOrString,
 		code:     0xA,
 	},
 	"jg": commandConfig{
-		getParam: getSecondWordAsInt,
+		getParam: getSecondWordAsIntOrString,
 		code:     0xB,
 	},
 	"je": commandConfig{
-		getParam: getSecondWordAsInt,
+		getParam: getSecondWordAsIntOrString,
 		code:     0xD,
 	},
 	"jl": commandConfig{
-		getParam: getSecondWordAsInt,
+		getParam: getSecondWordAsIntOrString,
 		code:     0xF,
 	},
 }
