@@ -1,6 +1,7 @@
 package myerrors
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -9,7 +10,19 @@ func CommandCodeOverflow(commandCode int, amntBits int) error {
 }
 
 func ParamOverflow(param int, amntBits int) error {
-	return fmt.Errorf("Param '%b' overflow %d bits", param, amntBits)
+	return fmt.Errorf("Param '%b' overflows %d bits", param, amntBits)
+}
+
+func InvalidLabelParam(label string) error {
+	return fmt.Errorf("Param '%s' is not a valid label name", label)
+}
+
+func InvalidParamLabelOrInt(param string, err error) error {
+	return fmt.Errorf("Param '%s' is not a valid label nor a valid number (Conversion error: %s)", param, err.Error())
+}
+
+func InvalidStateTransformationToExecuterError() error {
+	return errors.New("Invalid State: Cannot transform command to executer while parameter is still a label")
 }
 
 func WrongNumberOfParamsError(command string, amntExpected int, amntReceived int, params []string) error {

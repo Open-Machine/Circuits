@@ -4,7 +4,6 @@ import (
 	"assembler/config"
 	"assembler/myerrors"
 	"assembler/utils"
-	"errors"
 )
 
 type Command struct {
@@ -17,9 +16,17 @@ func NewCommand(code int, param CommandParameter) (*Command, *myerrors.CustomErr
 		err := myerrors.CommandCodeOverflow(code, config.AmntBitsCode)
 		return nil, myerrors.NewAssemblerError(err)
 	}
-	if !param.IsStr && utils.IsOverflow(uint(param.Num), config.AmntBitsParam) {
-		err := myerrors.ParamOverflow(param.Num, config.AmntBitsParam)
-		return nil, myerrors.NewCodeError(err)
+
+	if param.IsStr {
+		if !utils.IsValidVarName(param.Str) {
+			err := myerrors.InvalidLabelParam(param.Str)
+			return nil, myerrors.NewAssemblerError(err)
+		}
+	} else {
+		if !param.IsStr && utils.IsOverflow(uint(param.Num), config.AmntBitsParam) {
+			err := myerrors.ParamOverflow(param.Num, config.AmntBitsParam)
+			return nil, myerrors.NewCodeError(err)
+		}
 	}
 
 	return &Command{code, param}, nil
@@ -35,7 +42,7 @@ func NewCommandTest(code int, param CommandParameter) *Command {
 func (c Command) toExecuter() (string, error) {
 	if c.parameter.IsStr {
 		// TODO: error or custom error?
-		return "", errors.New("Cannot transform command to executer while parameter is still a label")
+		return "", myerrors.InvalidStateTransformationToExecuterError()
 	}
 
 	str1, err1 := utils.IntToStrHex(c.commandCode, 2)

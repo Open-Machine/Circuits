@@ -31,14 +31,15 @@ func TestNewCommandOverflowValidation(t *testing.T) {
 	}
 }
 
-// TODO: TEST IF PARAMETER IS BEING CALLED
 func TestNewCommandWrongStringParam(t *testing.T) {
 	var tests = []struct {
 		code         int
 		param        string
 		expectsError bool
 	}{
-		{0, "", false},
+		{0, "", true},
+		{0, "1a", true},
+		{0, "a1", false},
 	}
 
 	for i, test := range tests {
