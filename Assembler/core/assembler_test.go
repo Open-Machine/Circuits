@@ -11,16 +11,24 @@ import (
 )
 
 func TestAssembleFile(t *testing.T) {
-	// TODO
+	// TODO: testar todos os ifs
+
+	// repeated label (fail)
+	// {
+	// 	[]string{
+	// 		"label : store 12 ",
+	// 		"copy 12 ",
+	// 		"label : kill ",
+	// 	},
+	// 	nil,
+	// 	true,
+	// },
 }
 
 func TestProgramFromFile(t *testing.T) {
 	stdout := helper.Out
-	helper.Out = new(bytes.Buffer)
 	defer func() { helper.Out = stdout }()
-
 	stderr := helper.Err
-	helper.Err = new(bytes.Buffer)
 	defer func() { helper.Err = stderr }()
 
 	var tests = []struct {
@@ -35,7 +43,7 @@ func TestProgramFromFile(t *testing.T) {
 				" ",
 				"    ",
 			},
-			newProgramPointer([]data.Command{}),
+			newProgramPointer([]data.Command{}, map[string]int{}),
 			false,
 		},
 		// blank lines and right methods
@@ -46,10 +54,13 @@ func TestProgramFromFile(t *testing.T) {
 				"store 1",
 				"store 0xC",
 			},
-			newProgramPointer([]data.Command{
-				*newCommand(0x2, 1),
-				*newCommand(0x2, 12),
-			}),
+			newProgramPointer(
+				[]data.Command{
+					*newCommand(0x2, 1),
+					*newCommand(0x2, 12),
+				},
+				map[string]int{},
+			),
 			false,
 		},
 		// wrong method
@@ -68,6 +79,85 @@ func TestProgramFromFile(t *testing.T) {
 			nil,
 			true,
 		},
+		// goto labels always on same line and commandIndex!=lineIndex (successful)
+		{
+			[]string{
+				"",
+				"  ",
+				"label1: store 1",
+				"store 0xC",
+				"label2: copy 0xF",
+			},
+			newProgramPointer(
+				[]data.Command{
+					*newCommand(0x2, 1),
+					*newCommand(0x2, 12),
+					*newCommand(0x1, 15),
+				},
+				map[string]int{
+					"label1": 0,
+					"label2": 2,
+				},
+			),
+			false,
+		},
+		// labels always alone on the line (successful)
+		{
+			[]string{
+				"label1 :  ",
+				"store 1",
+				"store 0xC",
+				"jmping:",
+				"store 0xC",
+			},
+			newProgramPointer(
+				[]data.Command{
+					*newCommand(0x2, 1),
+					*newCommand(0x2, 12),
+					*newCommand(0x2, 12),
+				},
+				map[string]int{
+					"label1": 0,
+					"jmping": 2,
+				},
+			),
+			false,
+		},
+		// goto labels mixed on same line and on the line above (successful)
+		{
+			[]string{
+				"store 1",
+				"label1:",
+				"store 1",
+				"store 0xC",
+				"label2: copy 0xF",
+				"kill",
+			},
+			newProgramPointer(
+				[]data.Command{
+					*newCommand(0x2, 1),
+					*newCommand(0x2, 1),
+					*newCommand(0x2, 12),
+					*newCommand(0x1, 15),
+					*newCommand(0x9, 0),
+				},
+				map[string]int{
+					"label1": 1,
+					"label2": 3,
+				},
+			),
+			false,
+		},
+		// invalid label (fail)
+		{
+			[]string{
+				"1label1 :  ",
+				"store 1",
+				"store 0xC",
+			},
+			nil,
+			true,
+		},
 	}
 
 	for i, test := range tests {
@@ -79,6 +169,9 @@ func TestProgramFromFile(t *testing.T) {
 			}
 		}
 
+		helper.Out = new(bytes.Buffer)
+		helper.Err = new(bytes.Buffer)
+
 		got := programFromFile(strings.NewReader(str))
 
 		if !helper.SafeIsEqualProgramPointer(test.expected, got) {
@@ -88,13 +181,13 @@ func TestProgramFromFile(t *testing.T) {
 		stderrStr := helper.Err.(*bytes.Buffer).String()
 		gotErr := stderrStr != ""
 		if test.expectsErr != gotErr {
-			t.Errorf("[%d] Expected error: %t, Got error: %t // ", i, test.expectsErr, gotErr)
+			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsErr, gotErr)
 			t.Errorf("\t\t StdErr: %s", stderrStr)
 		}
 	}
 }
-func newProgramPointer(commands []data.Command) *data.Program {
-	prog := data.ProgramFromCommands(commands)
+func newProgramPointer(commands []data.Command, gotoLabelsDict map[string]int) *data.Program {
+	prog := data.ProgramFromCommandsAndLabels(commands, gotoLabelsDict)
 	return &prog
 }
 
@@ -116,6 +209,8 @@ func TestAssembleEntireLine(t *testing.T) {
 		{"	inputa 	a0x1 ", nil, nil, 1},
 		// Success with label
 		{"	label: input 	0x1 ", helper.StringPointer("label"), newCommand(7, 1), 0},
+		// Success only label
+		{"	label: ", helper.StringPointer("label"), nil, 0},
 		// Fail with label
 		{"	label: inputa 	0x1 ", helper.StringPointer("label"), nil, 1},
 		{"	1label: inputa 	0x1 ", nil, nil, 2},
@@ -159,39 +254,39 @@ func TestWriteAssembledFile(t *testing.T) {
 		expectsErr      bool
 	}{
 		{
-			data.ProgramFromCommands([]data.Command{
+			data.ProgramFromCommandsAndLabels([]data.Command{
 				*newCommand(0x2, 1),
 				*newCommand(0x2, 12),
-			}),
+			}, map[string]int{}),
 			"0201020c",
 			0,
 			false,
 		},
 		{
-			data.ProgramFromCommands([]data.Command{
+			data.ProgramFromCommandsAndLabels([]data.Command{
 				*newCommand(0x2, 1),
 				*newCommand(0x2, 12),
 				*newCommand(0xD, 15),
-			}),
+			}, map[string]int{}),
 			"0201020c0d0f",
 			0,
 			false,
 		},
 		{
-			data.ProgramFromCommands([]data.Command{
+			data.ProgramFromCommandsAndLabels([]data.Command{
 				*newCommand(0x2, 1),
 				*data.NewCommandTest(0x222, data.NewIntParam(12)),
 				*newCommand(0xD, 115),
-			}),
+			}, map[string]int{}),
 			"",
 			1,
 			true,
 		},
 		{
-			data.ProgramFromCommands([]data.Command{
+			data.ProgramFromCommandsAndLabels([]data.Command{
 				*newCommand(0x2, 1),
 				*data.NewCommandTest(0x2, data.NewStringParam("a")),
-			}),
+			}, map[string]int{}),
 			"",
 			1,
 			true,

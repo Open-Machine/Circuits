@@ -13,12 +13,16 @@ func NewProgram(lines int) Program {
 	return Program{commands: make([]Command, 0, lines), gotoLabelsDict: map[string]int{}}
 }
 
-func ProgramFromCommands(commands []Command) Program {
-	return Program{commands: commands, gotoLabelsDict: map[string]int{}}
+func ProgramFromCommandsAndLabels(commands []Command, gotoLabelsDict map[string]int) Program {
+	return Program{commands: commands, gotoLabelsDict: gotoLabelsDict}
 }
 
 func (p *Program) AddCommand(command Command) {
 	p.commands = append(p.commands, command)
+}
+
+func (p *Program) LenCommands() int {
+	return len(p.commands)
 }
 
 func (p *Program) AddGotoLabel(label string, commandIndex int) error {

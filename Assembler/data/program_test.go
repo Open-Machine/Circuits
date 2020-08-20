@@ -65,3 +65,20 @@ func TestAddGotoLabel(t *testing.T) {
 		}
 	}
 }
+
+func TestLenCommands(t *testing.T) {
+	program1 := NewProgram(5)
+	if program1.LenCommands() != 0 {
+		t.Errorf("Wrong 1")
+	}
+
+	program2 := Program{[]Command{mockCommand(), mockCommand()}, map[string]int{}}
+	program2.AddCommand(mockCommand())
+	if program2.LenCommands() != 3 {
+		t.Errorf("Wrong 1")
+	}
+}
+func mockCommand() Command {
+	cmd, _ := NewCommand(0, NewIntParam(1))
+	return *cmd
+}

@@ -58,14 +58,17 @@ func programFromFile(file io.Reader) *data.Program {
 			return nil
 		}
 
-		// TODO: GOTO LABEL
-		_, commandPointer, errs := assembleEntireLine(line)
+		gotoLabel, commandPointer, errs := assembleEntireLine(line)
+
+		if gotoLabel != nil {
+			program.AddGotoLabel(*gotoLabel, program.LenCommands())
+		}
 
 		if len(errs) > 0 {
 			successful = false
 
 			for _, err := range errs {
-				helper.PrintlnErr(fmt.Sprintf("[Error] Error on line %d: %s", lineIndex, line))
+				helper.PrintlnErr(fmt.Sprintf("[Error] Error on line %d: '%s'", lineIndex, line))
 				helper.PrintlnErr(fmt.Sprintf("\t\tError: %s", err.Error()))
 				helper.PrintlnErr("")
 			}
@@ -97,6 +100,10 @@ func assembleEntireLine(line string) (*string, *data.Command, []myerrors.CustomE
 	gotoLabel, restOfCommandStr, errLabel := AssembleGotoLabel(normalizedStr)
 	if errLabel != nil {
 		errs = append(errs, *errLabel)
+	}
+
+	if restOfCommandStr == "" {
+		return gotoLabel, nil, errs
 	}
 
 	commandPointer, errCmd := AssembleCommand(restOfCommandStr)

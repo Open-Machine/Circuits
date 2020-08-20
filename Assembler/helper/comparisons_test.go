@@ -48,7 +48,7 @@ func TestSafeIsEqualProgramPointer(t *testing.T) {
 }
 func newProgram(a int, b int) *data.Program {
 	cmd, _ := data.NewCommand(a, data.NewIntParam(b))
-	program := data.ProgramFromCommands([]data.Command{*cmd})
+	program := data.ProgramFromCommandsAndLabels([]data.Command{*cmd}, map[string]int{})
 	return &program
 }
 
