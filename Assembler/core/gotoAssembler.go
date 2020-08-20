@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func AssembleGotoLabel(line string) (*string, string, error) {
+func AssembleGotoLabel(line string) (*string, string, *myerrors.CustomError) {
 	indexOfColon := strings.Index(line, ":")
 
 	if indexOfColon < 0 {
@@ -17,7 +17,7 @@ func AssembleGotoLabel(line string) (*string, string, error) {
 	restOfLine := strings.TrimSpace(line[indexOfColon+1:])
 
 	if !utils.IsValidVarName(label) {
-		return nil, restOfLine, myerrors.InvalidLabelParam(label)
+		return nil, restOfLine, myerrors.NewCodeError(myerrors.InvalidLabelParam(label))
 	}
 
 	return &label, restOfLine, nil

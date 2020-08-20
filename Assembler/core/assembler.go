@@ -57,12 +57,17 @@ func programFromFile(file io.Reader) *data.Program {
 			return nil
 		}
 
-		commandPointer, err := assembleEntireLine(line)
+		// TODO: GOTO LABEL
+		_, commandPointer, errs := assembleEntireLine(line)
 
-		if err != nil {
+		if len(errs) > 0 {
 			successful = false
-			utils.PrintlnErr(fmt.Sprintf("[Error] Error on line %d: %s", lineIndex, line))
-			utils.PrintlnErr(fmt.Sprintf("\t\tError: %s", err.Error()))
+
+			for _, err := range errs {
+				utils.PrintlnErr(fmt.Sprintf("[Error] Error on line %d: %s", lineIndex, line))
+				utils.PrintlnErr(fmt.Sprintf("\t\tError: %s", err.Error()))
+				utils.PrintlnErr("")
+			}
 		} else if commandPointer != nil {
 			program.AddCommand(*commandPointer)
 		}
@@ -79,18 +84,27 @@ func programFromFile(file io.Reader) *data.Program {
 	return &program
 }
 
-func assembleEntireLine(line string) (*data.Command, *myerrors.CustomError) {
+func assembleEntireLine(line string) (*string, *data.Command, []myerrors.CustomError) {
 	normalizedStr := utils.LineNormalization(line)
 
 	if normalizedStr == "" {
-		return nil, nil
+		return nil, nil, nil
 	}
 
-	// TODO: gotoLabel, restOfCommandStr := core.AssembleGotoLabel(normalizedStr)
-	restOfCommandStr := normalizedStr
+	errs := make([]myerrors.CustomError, 0)
 
-	commandPointer, err := AssembleCommand(restOfCommandStr)
-	return commandPointer, err
+	gotoLabel, restOfCommandStr, errLabel := AssembleGotoLabel(normalizedStr)
+	if errLabel != nil {
+		errs = append(errs, *errLabel)
+	}
+
+	commandPointer, errCmd := AssembleCommand(restOfCommandStr)
+
+	if errCmd != nil {
+		errs = append(errs, *errCmd)
+	}
+
+	return gotoLabel, commandPointer, errs
 }
 
 func writeBinaryProgram(program data.Program, binaryFileName string, binaryFile io.Writer) int {

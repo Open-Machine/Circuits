@@ -14,78 +14,6 @@ func TestAssembleFile(t *testing.T) {
 	// TODO
 }
 
-func TestWAssembleFile(t *testing.T) {
-	stdout := utils.Out
-	utils.Out = new(bytes.Buffer)
-	defer func() { utils.Out = stdout }()
-
-	stderr := utils.Err
-	utils.Err = new(bytes.Buffer)
-	defer func() { utils.Err = stderr }()
-
-	oldTesting := config.Testing
-	config.Testing = true
-	defer func() { config.Testing = oldTesting }()
-
-	var tests = []struct {
-		param           data.Program
-		expectedFileStr string
-		expectedCode    int
-		expectsErr      bool
-	}{
-		{
-			data.ProgramFromCommands([]data.Command{
-				*newCommand(0x2, 1),
-				*newCommand(0x2, 12),
-			}),
-			"0201020c",
-			0,
-			false,
-		},
-		{
-			data.ProgramFromCommands([]data.Command{
-				*newCommand(0x2, 1),
-				*newCommand(0x2, 12),
-				*newCommand(0xD, 15),
-			}),
-			"0201020c0d0f",
-			0,
-			false,
-		},
-		{
-			data.ProgramFromCommands([]data.Command{
-				*newCommand(0x2, 1),
-				*data.NewCommandTest(0x222, data.NewIntParam(12)),
-				*newCommand(0xD, 115),
-			}),
-			"",
-			1,
-			true,
-		},
-	}
-
-	for i, test := range tests {
-		fileWriter := new(bytes.Buffer)
-		got := writeBinaryProgram(test.param, "File", fileWriter)
-
-		if !reflect.DeepEqual(test.expectedCode, got) {
-			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedCode, got)
-		}
-
-		gotFileStr := fileWriter.String()
-		if gotFileStr != test.expectedFileStr {
-			t.Errorf("[%d] Expected file str: %v, Got file str: %v", i, test.expectedFileStr, gotFileStr)
-		}
-
-		stderrStr := utils.Err.(*bytes.Buffer).String()
-		gotErr := stderrStr != ""
-		if test.expectsErr != gotErr {
-			t.Errorf("[%d] Expected error: %t, Got error: %t // ", i, test.expectsErr, gotErr)
-			t.Errorf("\t\t StdErr: %s", stderrStr)
-		}
-	}
-}
-
 func TestProgramFromFile(t *testing.T) {
 	stdout := utils.Out
 	utils.Out = new(bytes.Buffer)
@@ -177,34 +105,127 @@ func newProgramPointer(commands []data.Command) *data.Program {
 
 func TestAssembleEntireLine(t *testing.T) {
 	var tests = []struct {
-		param      string
-		expected   *data.Command
-		expectsErr bool
+		param            string
+		expectedLabel    *string
+		expectedCmd      *data.Command
+		amntErrsExpected int
 	}{
-		{"", nil, false},
-		{" 	 ", nil, false},
-		{"	 	 	", nil, false},
-		{"	input 	1 ", newCommand(7, 1), false},
-		{"	input 	0x1 ", newCommand(7, 1), false},
-		{"	inputa 	0x1 ", nil, true},
-		{"	inputa 	a0x1 ", nil, true},
+		// Success without label
+		{"", nil, nil, 0},
+		{" 	 ", nil, nil, 0},
+		{"	 	 	", nil, nil, 0},
+		{"	input 	1 ", nil, newCommand(7, 1), 0},
+		{"	input 	0x1 ", nil, newCommand(7, 1), 0},
+		// Fail without label
+		{"	inputa 	0x1 ", nil, nil, 1},
+		{"	inputa 	a0x1 ", nil, nil, 1},
+		// Success with label
+		{"	label: input 	0x1 ", utils.NewString("label"), newCommand(7, 1), 0},
+		// Fail with label
+		{"	label: inputa 	0x1 ", utils.NewString("label"), nil, 1},
+		{"	1label: inputa 	0x1 ", nil, nil, 2},
+		{"	1label: input 	0x1 ", nil, newCommand(7, 1), 1},
 	}
 
 	for i, test := range tests {
-		got, err := assembleEntireLine(test.param)
-		gotError := err != nil
+		gotLabel, gotCmd, errs := assembleEntireLine(test.param)
 
-		bothNil := test.expected == nil && got == nil
-		someNil := test.expected == nil || got == nil
+		bothNil := test.expectedCmd == nil && gotCmd == nil
+		someNil := test.expectedCmd == nil || gotCmd == nil
 
 		if !bothNil {
-			if someNil || *test.expected != *got {
-				t.Errorf("[%d] Expected: %v, Got: %v", i, test.expected, got)
+			if someNil || *test.expectedCmd != *gotCmd {
+				t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedCmd, gotCmd)
 			}
 		}
 
-		if test.expectsErr != gotError {
-			t.Errorf("[%d] Expected error: %t, Got error: %t", i, test.expectsErr, gotError)
+		if !utils.SafeIsEqualStrPointer(gotLabel, test.expectedLabel) {
+			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedLabel, gotLabel)
+		}
+
+		if len(errs) != test.amntErrsExpected {
+			t.Errorf("[%d] Amnt errors expected: %d, Errors: %v", i, test.amntErrsExpected, errs)
+		}
+	}
+}
+
+func TestWriteAssembledFile(t *testing.T) {
+	stdout := utils.Out
+	utils.Out = new(bytes.Buffer)
+	defer func() { utils.Out = stdout }()
+
+	stderr := utils.Err
+	utils.Err = new(bytes.Buffer)
+	defer func() { utils.Err = stderr }()
+
+	oldTesting := config.Testing
+	config.Testing = true
+	defer func() { config.Testing = oldTesting }()
+
+	var tests = []struct {
+		param           data.Program
+		expectedFileStr string
+		expectedCode    int
+		expectsErr      bool
+	}{
+		{
+			data.ProgramFromCommands([]data.Command{
+				*newCommand(0x2, 1),
+				*newCommand(0x2, 12),
+			}),
+			"0201020c",
+			0,
+			false,
+		},
+		{
+			data.ProgramFromCommands([]data.Command{
+				*newCommand(0x2, 1),
+				*newCommand(0x2, 12),
+				*newCommand(0xD, 15),
+			}),
+			"0201020c0d0f",
+			0,
+			false,
+		},
+		{
+			data.ProgramFromCommands([]data.Command{
+				*newCommand(0x2, 1),
+				*data.NewCommandTest(0x222, data.NewIntParam(12)),
+				*newCommand(0xD, 115),
+			}),
+			"",
+			1,
+			true,
+		},
+		{
+			data.ProgramFromCommands([]data.Command{
+				*newCommand(0x2, 1),
+				*data.NewCommandTest(0x2, data.NewStringParam("a")),
+			}),
+			"",
+			1,
+			true,
+		},
+	}
+
+	for i, test := range tests {
+		fileWriter := new(bytes.Buffer)
+		got := writeBinaryProgram(test.param, "File", fileWriter)
+
+		if !reflect.DeepEqual(test.expectedCode, got) {
+			t.Errorf("[%d] Expected: %v, Got: %v", i, test.expectedCode, got)
+		}
+
+		gotFileStr := fileWriter.String()
+		if gotFileStr != test.expectedFileStr {
+			t.Errorf("[%d] Expected file str: %v, Got file str: %v", i, test.expectedFileStr, gotFileStr)
+		}
+
+		stderrStr := utils.Err.(*bytes.Buffer).String()
+		gotErr := stderrStr != ""
+		if test.expectsErr != gotErr {
+			t.Errorf("[%d] Expected error: %t, Got error: %t // ", i, test.expectsErr, gotErr)
+			t.Errorf("\t\t StdErr: %s", stderrStr)
 		}
 	}
 }
