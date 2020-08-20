@@ -146,7 +146,12 @@ func TestAssembleCommand(t *testing.T) {
 		// Fail: Wrong Command
 		{"nope", nil, true},
 		// Fail: No label as param
-		{"add x10", nil, true},
+		{"copy label", nil, true},
+		{"store label", nil, true},
+		{"add label", nil, true},
+		{"sub label", nil, true},
+		{"input label", nil, true},
+		{"output label", nil, true},
 		// Fail: Wrong param
 		{"add 1x10", nil, true},
 		// Fail: Amnt params
