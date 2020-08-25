@@ -2,67 +2,88 @@
 Designing a computer from scratch. The only components that I didn't made were the ports.
 
 #### Todo
-- [X] ULA
-- [X] Control Unit
-- [X] Basic Circuit
-- [X] Basic Assembler
-- [ ] Assembler with jump to label
-- [ ] High-Level Language Compiler
 - [ ] Signed integer
 - [ ] Float
 - [ ] Division circuit and command
+- [ ] Own Registers
 - [ ] Clock
 - [ ] Own RAM
 
-## Objective
-Understand how a computer works behind the curtains and maybe do some things my way.
+// TODO: add images of the Circuit for each
+// TODO: it's too basic and if I was talking to a child
 
-## Run
-1. Run circuit software
-```sh
-java -jar logisim-evolution.jar
-```
-2. File -> Open -> Select main.circ
-3. Open Main
-4. Program - [How do I program this computer?](#code)
+---
 
-## How does a computer work?
-### Internal components
-- CPU
-  - Control Unit (CU)
-  - Arithmetic Logic Unit (ALU)
-  - Registers: PC, AC, EE
-- RAM
-- Clock
+# 🔖 Table of Contents
+- [📖 How does a computer work behind the curtains?](#how-does-a-computer-work-behind-the-curtains)
+- [Code](#machine-code-and-assembly)
+- [▶️ Execute the machine and your program](#steps-to-run-the-machine-with-your-program)
 
-## Machine Code and Assembly
-The code should be written in RAM and it will be executed from the memmory address in register CP content. Every 4 bytes are considered a line of code.
-<br/>Line of code = Instruction (2 bytes) + Memory Address (2 bytes).
+---
+
+# [WIP] How does a computer work behind the curtains?
+Developers usually have a good understanding of how a computer works. However, for me at least understanding a computer so deeply that you would be able to actually build one yourself seemed like an impossible task. So, in this section I want to break to you the most important pieces of the computer puzzle that you need to know in order to build your own computer from scratch using only circuits.
+
+## Circuit Components
+
+#### Central Processing Unit (CPU)
+The CPU is the brain of the computer, where every instruction is processed. It is composed by the sub-components below:
+  - *Control Unit (CU)*: it controls the flags of the entire CPU
+  - *Arithmetic Logic Unit (ALU)*: it performs sum, subtracted and comparisons between numbers
+  - *Registers*: it's a small memory that stays inside the CPU for faster 
+
+#### Random Access Memory (RAM)
+RAM is a memory fast, but temporary
+
+#### Disk
+RAM is a fast, but temporary
+
+#### Input/Output Devices
+For an actual computer, you also need input and output devices such as 
+
+---
+
+## Code
+
+Line of code = Instruction (2 bytes) + Memory Address (2 bytes).
+
 ps: The memory address in the lines of code will be called EE - [EE] represents EE value and EE
-##### Instructions Table
-Machine Code | Assembly Command | Description | Requires Param
---- | --- | --- | ---
-0x0 | nop | No operation | No
-0x1 | copy | [AC] = [EE] | Yes
-0x2 | store | [EE] = [AC] | Yes
-0x3 | add | [AC] = [AC] + [EC] | Yes
-0x4 | sub | [AC] = [AC] - [EC] | Yes
-0x7 | input | [EE] = to the input value | Yes
-0x8 | output | Output [EE] | Yes
-0x9 | kill | Finish program | No
-0xa | jmp | Jump to EE | Yes
-0xb | jg | Jump to EE if [AC] > 0 | Yes
-0xd | je | Jump to EE if [AC] = 0 | Yes
-0xf | jl | Jump to EE if [AC] < 0 | Yes
+
+###### Instructions Table
+Machine Code | Description | Requires Param
+--- | --- | ---
+0x0 | No operation | No
+0x1 | [AC] = [EE] | Yes
+0x2 | [EE] = [AC] | Yes
+0x3 | [AC] = [AC] + [EC] | Yes
+0x4 | [AC] = [AC] - [EC] | Yes
+0x7 | [EE] = to the input value | Yes
+0x8 | Output [EE] | Yes
+0x9 | Finish program | No
+0xa | Jump to EE | Yes
+0xb | Jump to EE if [AC] > 0 | Yes
+0xd | Jump to EE if [AC] = 0 | Yes
+0xf | Jump to EE if [AC] < 0 | Yes
 ### Machine Code Example
 ```sh
 01ff # copy value in the address ff in RAM
 020a # stores the value of AC in the address 0a
 0900 # kills program
 ```
-### Assembly Code Example
-```sh
-copy 0xff # copy value in the address ff in RAM
-store 0x0a # stores the value of AC in the address 0a
-kill
-```
+
+---
+
+## ▶️ Execute the machine
+
+1. Run the machine:
+	```sh
+	java -jar logisim-evolution.jar
+	```
+2. Import the circuit file by navigating the menu:
+   *```File -> Open -> Select main.circ from the repository folder```*
+3. Open Main file on the left side of Logisim
+4. Paste the executable code into the beginning of the RAM. You may want to change some values of the memory as if you were initializing variables.
+5. Run the Program by navigating the menu:
+   *```Simulate -> Enable 'Ticks Enabled'```*
+   - You can change the speed of the program by navigating the menu: 
+	*```Simulate -> Tick Frequency -> To get the fastest execution, select the top item```*
