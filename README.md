@@ -1,5 +1,7 @@
-# Computer-from-Scratch
-Designing a computer from scratch. The only components that I didn't made were the ports.
+# Circuit
+A computer basic circuit using made only using logic ports.
+
+*This repository is part of a bigger project: developing a computer from scratch. Check it out [here](https://github.com/Open-Machine/)!*
 
 #### Todo
 - [ ] Signed integer
@@ -10,14 +12,15 @@ Designing a computer from scratch. The only components that I didn't made were t
 - [ ] Own RAM
 
 // TODO: add images of the Circuit for each
+
 // TODO: it's too basic and if I was talking to a child
 
 ---
 
 # 🔖 Table of Contents
-- [📖 How does a computer work behind the curtains?](#how-does-a-computer-work-behind-the-curtains)
-- [Code](#machine-code-and-assembly)
-- [▶️ Execute the machine and your program](#steps-to-run-the-machine-with-your-program)
+- [Circuit](#circuit)
+- [🔖 Table of Contents](#-table-of-contents)
+- [[WIP] How does a computer work behind the curtains?](#wip-how-does-a-computer-work-behind-the-curtains)
 
 ---
 
