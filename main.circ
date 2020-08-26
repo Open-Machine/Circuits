@@ -69,10 +69,10 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <a name="circuitnamedbox" val="false"/>
     <a name="circuitvhdlpath" val=""/>
     <wire from="(510,1160)" to="(1590,1160)"/>
-    <wire from="(1370,1370)" to="(1370,1390)"/>
     <wire from="(1010,900)" to="(1010,1100)"/>
     <wire from="(280,630)" to="(280,1220)"/>
     <wire from="(1140,920)" to="(1140,1330)"/>
+    <wire from="(1380,1350)" to="(1420,1350)"/>
     <wire from="(1040,880)" to="(1040,910)"/>
     <wire from="(230,400)" to="(410,400)"/>
     <wire from="(590,620)" to="(590,690)"/>
@@ -84,18 +84,23 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(330,1010)" to="(430,1010)"/>
     <wire from="(840,590)" to="(840,670)"/>
     <wire from="(590,1110)" to="(1210,1110)"/>
+    <wire from="(1510,1590)" to="(1520,1590)"/>
     <wire from="(940,410)" to="(960,410)"/>
     <wire from="(270,620)" to="(270,1230)"/>
+    <wire from="(1190,1370)" to="(1190,1550)"/>
     <wire from="(1130,1330)" to="(1140,1330)"/>
     <wire from="(1110,910)" to="(1120,910)"/>
     <wire from="(1120,910)" to="(1190,910)"/>
+    <wire from="(1190,1370)" to="(1320,1370)"/>
     <wire from="(870,1050)" to="(870,1210)"/>
     <wire from="(280,1220)" to="(880,1220)"/>
     <wire from="(620,290)" to="(620,390)"/>
     <wire from="(650,1000)" to="(650,1100)"/>
+    <wire from="(1290,1510)" to="(1320,1510)"/>
     <wire from="(290,1210)" to="(870,1210)"/>
     <wire from="(830,670)" to="(840,670)"/>
     <wire from="(800,680)" to="(810,680)"/>
+    <wire from="(230,1560)" to="(1320,1560)"/>
     <wire from="(320,1020)" to="(450,1020)"/>
     <wire from="(410,1000)" to="(410,1120)"/>
     <wire from="(1600,310)" to="(1600,1180)"/>
@@ -124,7 +129,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(830,550)" to="(830,660)"/>
     <wire from="(910,1070)" to="(930,1070)"/>
     <wire from="(330,230)" to="(420,230)"/>
-    <wire from="(1280,1350)" to="(1360,1350)"/>
     <wire from="(720,840)" to="(930,840)"/>
     <wire from="(890,980)" to="(890,1020)"/>
     <wire from="(310,1030)" to="(470,1030)"/>
@@ -152,6 +156,8 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(550,1060)" to="(730,1060)"/>
     <wire from="(270,620)" to="(590,620)"/>
     <wire from="(330,230)" to="(330,1010)"/>
+    <wire from="(1350,1410)" to="(1350,1440)"/>
+    <wire from="(1280,1350)" to="(1320,1350)"/>
     <wire from="(450,990)" to="(450,1000)"/>
     <wire from="(670,930)" to="(1050,930)"/>
     <wire from="(1590,320)" to="(1590,1160)"/>
@@ -161,15 +167,16 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(650,670)" to="(650,690)"/>
     <wire from="(1140,920)" to="(1190,920)"/>
     <wire from="(490,1180)" to="(1600,1180)"/>
+    <wire from="(1310,1530)" to="(1320,1530)"/>
     <wire from="(730,700)" to="(730,1060)"/>
-    <wire from="(1350,1330)" to="(1360,1330)"/>
-    <wire from="(770,1370)" to="(1370,1370)"/>
     <wire from="(1220,940)" to="(1220,1120)"/>
     <wire from="(590,1000)" to="(590,1110)"/>
     <wire from="(700,950)" to="(1050,950)"/>
     <wire from="(400,290)" to="(420,290)"/>
     <wire from="(720,680)" to="(720,840)"/>
     <wire from="(290,640)" to="(570,640)"/>
+    <wire from="(1190,1550)" to="(1320,1550)"/>
+    <wire from="(230,1390)" to="(230,1560)"/>
     <wire from="(1120,440)" to="(1250,440)"/>
     <wire from="(310,210)" to="(310,1030)"/>
     <wire from="(280,630)" to="(610,630)"/>
@@ -189,17 +196,18 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(410,260)" to="(410,400)"/>
     <wire from="(930,840)" to="(930,870)"/>
     <wire from="(900,1050)" to="(900,1080)"/>
+    <wire from="(770,1370)" to="(1190,1370)"/>
     <wire from="(410,1120)" to="(1220,1120)"/>
     <wire from="(650,1100)" to="(1010,1100)"/>
     <wire from="(1110,320)" to="(1110,450)"/>
     <wire from="(450,1000)" to="(450,1020)"/>
+    <wire from="(230,670)" to="(230,1390)"/>
     <wire from="(400,550)" to="(830,550)"/>
     <wire from="(310,210)" to="(420,210)"/>
     <wire from="(570,1000)" to="(570,1030)"/>
     <wire from="(230,670)" to="(650,670)"/>
-    <wire from="(1390,1340)" to="(1440,1340)"/>
-    <wire from="(1370,1360)" to="(1370,1370)"/>
     <wire from="(1100,1070)" to="(1180,1070)"/>
+    <wire from="(1310,1500)" to="(1320,1500)"/>
     <wire from="(1180,930)" to="(1190,930)"/>
     <wire from="(1120,330)" to="(1580,330)"/>
     <wire from="(1040,910)" to="(1050,910)"/>
@@ -207,12 +215,12 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(510,1000)" to="(510,1160)"/>
     <wire from="(1280,840)" to="(1280,1350)"/>
     <wire from="(670,930)" to="(670,1030)"/>
-    <wire from="(1370,1390)" to="(1440,1390)"/>
     <wire from="(1230,920)" to="(1260,920)"/>
     <wire from="(1580,330)" to="(1580,1140)"/>
     <wire from="(930,870)" to="(1000,870)"/>
     <wire from="(1210,940)" to="(1210,1110)"/>
     <wire from="(570,640)" to="(570,690)"/>
+    <wire from="(230,1390)" to="(1320,1390)"/>
     <wire from="(290,640)" to="(290,1210)"/>
     <wire from="(1260,840)" to="(1280,840)"/>
     <comp lib="0" loc="(220,400)" name="Clock">
@@ -260,21 +268,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <comp loc="(910,1050)" name="ALU">
       <a name="facing" val="south"/>
       <a name="labelloc" val="south"/>
-    </comp>
-    <comp lib="2" loc="(1390,1340)" name="Multiplexer">
-      <a name="width" val="16"/>
-      <a name="enable" val="false"/>
-    </comp>
-    <comp lib="0" loc="(1350,1330)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0xffff"/>
-    </comp>
-    <comp lib="0" loc="(1440,1340)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="16"/>
-      <a name="label" val="circuit_print"/>
-      <a name="labelloc" val="east"/>
     </comp>
     <comp lib="0" loc="(1130,1330)" name="Pin">
       <a name="width" val="16"/>
@@ -337,10 +330,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="width" val="12"/>
       <a name="enable" val="false"/>
     </comp>
-    <comp lib="6" loc="(477,146)" name="Text">
-      <a name="text" val="CPU unsigned 16 bit with 12 bit addresses"/>
-      <a name="font" val="SansSerif bold 36"/>
-    </comp>
     <comp lib="4" loc="(420,180)" name="Counter">
       <a name="width" val="12"/>
       <a name="max" val="0xfff"/>
@@ -349,10 +338,36 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <comp lib="0" loc="(400,200)" name="Constant">
       <a name="value" val="0x0"/>
     </comp>
-    <comp lib="0" loc="(1440,1390)" name="Pin">
+    <comp lib="6" loc="(475,84)" name="Text">
+      <a name="text" val="CPU unsigned 16 bit with 12 bit addresses"/>
+      <a name="font" val="SansSerif bold 36"/>
+    </comp>
+    <comp lib="4" loc="(1320,1320)" name="Register">
+      <a name="width" val="16"/>
+    </comp>
+    <comp lib="0" loc="(1420,1350)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
-      <a name="label" val="print_enabled"/>
+      <a name="width" val="16"/>
+      <a name="label" val="main_output"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(1350,1440)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="4" loc="(1320,1480)" name="Counter"/>
+    <comp lib="0" loc="(1310,1500)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(1290,1510)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(1310,1530)" name="Constant"/>
+    <comp lib="0" loc="(1520,1590)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="label" val="output_index"/>
       <a name="labelloc" val="east"/>
     </comp>
   </circuit>
@@ -421,11 +436,11 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(320,440)" to="(910,440)"/>
     <wire from="(940,1040)" to="(1270,1040)"/>
     <wire from="(1320,540)" to="(1320,1540)"/>
+    <wire from="(860,960)" to="(910,960)"/>
     <wire from="(860,560)" to="(910,560)"/>
     <wire from="(860,1360)" to="(910,1360)"/>
     <wire from="(340,240)" to="(910,240)"/>
     <wire from="(420,1870)" to="(480,1870)"/>
-    <wire from="(860,960)" to="(910,960)"/>
     <wire from="(860,220)" to="(980,220)"/>
     <wire from="(860,620)" to="(980,620)"/>
     <wire from="(200,290)" to="(200,1640)"/>
@@ -819,23 +834,23 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(450,700)" to="(550,700)"/>
     <wire from="(240,540)" to="(280,540)"/>
     <wire from="(580,650)" to="(580,820)"/>
+    <wire from="(390,420)" to="(420,420)"/>
     <wire from="(390,700)" to="(420,700)"/>
+    <wire from="(390,660)" to="(420,660)"/>
+    <wire from="(390,620)" to="(420,620)"/>
+    <wire from="(390,740)" to="(420,740)"/>
+    <wire from="(390,780)" to="(420,780)"/>
+    <wire from="(390,860)" to="(420,860)"/>
+    <wire from="(570,530)" to="(590,530)"/>
+    <wire from="(390,820)" to="(420,820)"/>
     <wire from="(390,500)" to="(420,500)"/>
     <wire from="(390,460)" to="(420,460)"/>
-    <wire from="(390,420)" to="(420,420)"/>
     <wire from="(390,380)" to="(420,380)"/>
     <wire from="(390,340)" to="(420,340)"/>
     <wire from="(390,260)" to="(420,260)"/>
     <wire from="(390,300)" to="(420,300)"/>
     <wire from="(390,540)" to="(420,540)"/>
     <wire from="(390,580)" to="(420,580)"/>
-    <wire from="(390,740)" to="(420,740)"/>
-    <wire from="(390,660)" to="(420,660)"/>
-    <wire from="(390,620)" to="(420,620)"/>
-    <wire from="(390,780)" to="(420,780)"/>
-    <wire from="(390,860)" to="(420,860)"/>
-    <wire from="(390,820)" to="(420,820)"/>
-    <wire from="(570,530)" to="(590,530)"/>
     <wire from="(560,630)" to="(590,630)"/>
     <wire from="(540,460)" to="(540,560)"/>
     <wire from="(300,590)" to="(300,630)"/>
@@ -885,9 +900,9 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(240,530)" to="(270,530)"/>
     <wire from="(600,170)" to="(600,340)"/>
     <wire from="(260,630)" to="(260,790)"/>
+    <wire from="(390,660)" to="(390,700)"/>
     <wire from="(390,620)" to="(390,660)"/>
     <wire from="(390,700)" to="(390,740)"/>
-    <wire from="(390,660)" to="(390,700)"/>
     <wire from="(390,740)" to="(390,780)"/>
     <wire from="(390,820)" to="(390,860)"/>
     <wire from="(390,780)" to="(390,820)"/>
@@ -1542,14 +1557,14 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(140,420)" to="(320,420)"/>
     <wire from="(80,310)" to="(130,310)"/>
     <wire from="(110,370)" to="(110,580)"/>
-    <wire from="(140,600)" to="(140,690)"/>
-    <wire from="(140,240)" to="(140,330)"/>
-    <wire from="(170,110)" to="(170,200)"/>
-    <wire from="(170,290)" to="(170,380)"/>
-    <wire from="(170,470)" to="(170,560)"/>
-    <wire from="(170,650)" to="(170,740)"/>
     <wire from="(140,420)" to="(140,510)"/>
     <wire from="(130,310)" to="(130,400)"/>
+    <wire from="(170,110)" to="(170,200)"/>
+    <wire from="(170,290)" to="(170,380)"/>
+    <wire from="(170,650)" to="(170,740)"/>
+    <wire from="(170,470)" to="(170,560)"/>
+    <wire from="(140,600)" to="(140,690)"/>
+    <wire from="(140,240)" to="(140,330)"/>
     <wire from="(80,340)" to="(120,340)"/>
     <wire from="(130,50)" to="(170,50)"/>
     <wire from="(150,280)" to="(150,310)"/>
