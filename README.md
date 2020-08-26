@@ -5,7 +5,7 @@ A computer basic circuit using made only using logic ports.
 *This repository is part of a bigger project: developing a computer from scratch. Check it out [here](https://github.com/Open-Machine/)!*
 
 #### Todo
-- [ ] Signed integer
+- [X] Signed integer
 - [ ] Float
 - [ ] Division circuit and command
 - [ ] Own Registers
