@@ -52,27 +52,39 @@ Line of code = Instruction (2 bytes) + Memory Address (2 bytes).
 
 ps: The memory address in the lines of code will be called EE - [EE] represents EE value and EE
 
-###### Instructions Table
-Machine Code | Description | Requires Param
---- | --- | ---
-0x0 | No operation | No
-0x1 | [AC] = [EE] | Yes
-0x2 | [EE] = [AC] | Yes
-0x3 | [AC] = [AC] + [EC] | Yes
-0x4 | [AC] = [AC] - [EC] | Yes
-0x7 | [EE] = to the input value | Yes
-0x8 | Output [EE] | Yes
-0x9 | Finish program | No
-0xa | Jump to EE | Yes
-0xb | Jump to EE if [AC] > 0 | Yes
-0xd | Jump to EE if [AC] = 0 | Yes
-0xf | Jump to EE if [AC] < 0 | Yes
-### Machine Code Example
+
+## Instructions Table
+### Symbols Legend for the Instructions Table
+Symbol | Explanation
+--- | ---
+ACC | The ACC register
+EE | Represents a memory index
+[ ] | "Value of"
+### Instructions Table
+Machine Code | Short Instruction Description | Long Instruction Description | Short Param Description | Long Param Description
+--- | --- | --- | --- | ---
+0x0 | - | This instruction doesn't perform any action | - | No parameter is required
+0x1 | [ACC] = [EE] | A value from the memory is copied to the ACC register | variable | Memory index of a variable that will be used in the instruction
+0x2 | [EE] = [ACC] | The value from the ACC register is stored into memory | variable | Memory index of a variable that will be used in the instruction
+0x3 | [ACC] = [ACC] + [EE] | The sum of the value of the ACC register and a value from the memory is stored in the ACC register | variable | Memory index of a variable that will be used in the instruction
+0x4 | [ACC] = [ACC] - [EE] | The difference between the value of the ACC register and a value from the memory is stored in the ACC register | variable | Memory index of a variable that will be used in the instruction
+0x7 | [EE] = to the input value | The input value is copied to the memory | variable | Memory index of a variable that will be used in the instruction
+0x8 | Output [EE] | Outputs a value from the memory into the circuit LEDs | variable | Memory index of a variable that will be used in the instruction
+0x9 | Finishes program | When this instruction is encountered, the program is finished and no more instructions will be executed | - | No parameter is required
+0xa | Jump to EE | Jump to another line of code | instruction | Memory index of a instruction the program will jump to
+0xb | Jump to EE if [ACC] > 0 | Jump to another line of code if the value of the ACC register is positive | instruction | Memory index of a instruction the program will jump to if the condition is right
+0xd | Jump to EE if [ACC] = 0 | Jump to another line of code if the value of the ACC register is zero | instruction | Memory index of a instruction the program will jump to if the condition is right
+0xf | Jump to EE if [ACC] < 0 | Jump to another line of code if the value of the ACC register is negative | instruction | Memory index of a instruction the program will jump to if the condition is right
+
+## Machine Code Example
 ```sh
 01ff # copy value in the address ff in RAM
 020a # stores the value of AC in the address 0a
 0900 # kills program
 ```
+
+## Tips
+- Remember to add the ```0x9``` instruction at the end of your programs
 
 ---
 
