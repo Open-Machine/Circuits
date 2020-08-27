@@ -20,13 +20,14 @@ A computer basic circuit using made only using logic ports.
 
 <!-- omit in toc -->
 # 🔖 Table of Contents
-- [[WIP] How does a computer work behind the curtains?](#wip-how-does-a-computer-work-behind-the-curtains)
-- [Code](#code)
-- [▶️ Execute the machine](#️-execute-the-machine)
+#### 1. [💻 How does a computer work behind the curtains?](#how-does-a-computer-work-behind-the-curtains)
+#### 2. [🔢 Machine Code](#machine-code)
+#### 3. [▶️ Execute the machine](#️-execute-the-machine)
+#### 4. [📄 Contributing Guidelines](#contributing-guidelines)
 
 ---
 
-# [WIP] How does a computer work behind the curtains?
+# 💻 How does a computer work behind the curtains?
 Developers usually have a good understanding of how a computer works. However, for me at least understanding a computer so deeply that you would be able to actually build one yourself seemed like an impossible task. So, in this section I want to break to you the most important pieces of the computer puzzle that you need to know in order to build your own computer from scratch using only circuits.
 
 ## Circuit Components
@@ -48,7 +49,7 @@ For an actual computer, you also need input and output devices such as
 
 ---
 
-# Code
+# 🔢 Machine Code
 
 Line of code = Instruction (2 bytes) + Memory Address (2 bytes).
 
@@ -115,3 +116,8 @@ Machine Code | Short Instruction Description | Long Instruction Description | Sh
 2. The outputs will appear on the console.
    - Ignore the first output
    - The outputs will follow the pattern: ```{16 bits of the main output}     {4 bit ouptut counter}```
+
+---
+
+# 📄 Contributing Guidelines
+Check out the contributing guidelines [here](https://github.com/Open-Machine/Circuits/blob/master/CONTRIBUTION.md).
