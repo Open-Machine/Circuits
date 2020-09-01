@@ -1,12 +1,12 @@
-<h1 align="center">Circuit - from Open Machine</h1>
+<h1 align="center">Open Machine's Circuits</i></h1>
 <div align="center">
 
-<a href="https://github.com/Open-Machine/Circuits/stargazers"><img src="https://img.shields.io/github/stars/Open-Machine/README" alt="Stars Badge"/></a>
-<a href="https://github.com/Open-Machine/Circuits/network/members"><img src="https://img.shields.io/github/forks/Open-Machine/README" alt="Forks Badge"/></a>
-<a href="https://github.com/Open-Machine/Circuits/pulls"><img src="https://img.shields.io/github/issues-pr/Open-Machine/README" alt="Pull Requests Badge"/></a>
-<a href="https://github.com/Open-Machine/Circuits/issues"><img src="https://img.shields.io/github/issues/Open-Machine/README" alt="Issues Badge"/></a>
-<a href="https://github.com/Open-Machine/Circuits/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Open-Machine/README?color=2b9348"></a>
-<a href="https://github.com/Open-Machine/Circuits/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Open-Machine/README?color=2b9348" alt="License Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/stargazers"><img src="https://img.shields.io/github/stars/Open-Machine/Circuits" alt="Stars Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/network/members"><img src="https://img.shields.io/github/forks/Open-Machine/Circuits" alt="Forks Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/pulls"><img src="https://img.shields.io/github/issues-pr/Open-Machine/Circuits" alt="Pull Requests Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/issues"><img src="https://img.shields.io/github/issues/Open-Machine/Circuits" alt="Issues Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Open-Machine/Circuits?color=2b9348"></a>
+<a href="https://github.com/Open-Machine/Circuits/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Open-Machine/Circuits?color=2b9348" alt="License Badge"/></a>
 
 <img src="https://raw.githubusercontent.com/Open-Machine/README/master/Media/logo-horizontal.png" alt="open-machine"/>
 
@@ -18,26 +18,27 @@
 
 </div>
 
-#### Todo
-- [X] Signed integer
-- [ ] Float
-- [ ] Division circuit and command
-- [ ] Own Registers
-- [ ] Clock
-- [ ] Own RAM
-
-// TODO: add images of the Circuit for each
-
-// TODO: it's too basic and if I was talking to a child
-
 ---
 
 <!-- omit in toc -->
 # 🔖 Table of Contents
-#### 1. [💻 How does a computer work behind the curtains?](#how-does-a-computer-work-behind-the-curtains)
-#### 2. [🔢 Machine Code](#machine-code)
-#### 3. [▶️ Execute the machine](#️-execute-the-machine)
-#### 4. [📄 Contributing Guidelines](#contributing-guidelines)
+### 1. [✔ Todo](#-todo)
+### 2. [💻 How does a computer work behind the curtains?](#-how-does-a-computer-work-behind-the-curtains)
+### 3. [🔢 Machine Code](#-machine-code)
+### 4. [▶️ Execute the machine](#️-execute-the-machine)
+### 5. [📄 Contributing Guidelines](#-contributing-guidelines)
+
+---
+
+# ✔ Todo
+- [X] 8 bit core
+- [X] 16 bit core
+- [X] Signed integer
+- [ ] Float
+- [ ] Division circuit and command
+- [ ] Custom registers
+- [ ] Custom clock
+- [ ] Custom RAM
 
 ---
 
