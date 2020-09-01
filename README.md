@@ -1,8 +1,26 @@
-<!-- omit in toc -->
-# Circuit
-A computer basic circuit using made only using logic ports.
+<h1 align="center">Circuit - from Open Machine</h1>
+<div align="center">
 
-*This repository is part of a bigger project: developing a computer from scratch. Check it out [here](https://github.com/Open-Machine/)!*
+<a href="https://github.com/Open-Machine/Circuits/stargazers"><img src="https://img.shields.io/github/stars/Open-Machine/README" alt="Stars Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/network/members"><img src="https://img.shields.io/github/forks/Open-Machine/README" alt="Forks Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/pulls"><img src="https://img.shields.io/github/issues-pr/Open-Machine/README" alt="Pull Requests Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/issues"><img src="https://img.shields.io/github/issues/Open-Machine/README" alt="Issues Badge"/></a>
+<a href="https://github.com/Open-Machine/Circuits/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Open-Machine/README?color=2b9348"></a>
+<a href="https://github.com/Open-Machine/Circuits/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Open-Machine/README?color=2b9348" alt="License Badge"/></a>
+
+<img src="https://raw.githubusercontent.com/Open-Machine/README/master/Media/logo-horizontal.png" alt="open-machine"/>
+
+<br/>
+A basic computer circuit using made only using logic ports.
+<br/>
+
+<i>This repository is part of a bigger project: developing a computer from scratch. Check it out <a href="https://github.com/Open-Machine/">here<i/>
+
+<i>The goal is to to design and build a computer from scratch. I will only use logical gates to build the circuit and GoLang to build the compiler and assembler for your computer.</i>
+<br/>
+<i>I also want to understand how a computer works behind the curtains and maybe do some things my way.</i>
+
+</div>
 
 #### Todo
 - [X] Signed integer
