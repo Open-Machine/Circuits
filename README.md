@@ -11,14 +11,10 @@
 <img src="https://raw.githubusercontent.com/Open-Machine/README/master/Media/logo-horizontal.png" alt="open-machine"/>
 
 <br/>
-A basic computer circuit using made only using logic ports.
+<i>The goal is to to design and build a computer from scratch only using logical gates to do so.<i/>
 <br/>
 
-<i>This repository is part of a bigger project: developing a computer from scratch. Check it out <a href="https://github.com/Open-Machine/">here<i/>
-
-<i>The goal is to to design and build a computer from scratch. I will only use logical gates to build the circuit and GoLang to build the compiler and assembler for your computer.</i>
-<br/>
-<i>I also want to understand how a computer works behind the curtains and maybe do some things my way.</i>
+<i>This repository is part of a <a href="https://github.com/Open-Machine/">larger project<a/>: developing a computer from scratch with its <a href="https://github.com/Open-Machine/Assembler">assembler<a/> and compiler.
 
 </div>
 
