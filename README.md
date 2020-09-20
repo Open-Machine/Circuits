@@ -13,10 +13,10 @@
 <img src="https://raw.githubusercontent.com/Open-Machine/README/stable/Media/logo-horizontal.png" alt="open-machine"/>
 
 <br/>
-<i>The goal is to to design and build a computer from scratch only using logical gates to do so.<i/>
+<i>The goal is to to design and build a computer from scratch only using logical gates to do so.</i>
 <br/>
 
-<i>This repository is part of a <a href="https://github.com/Open-Machine/">larger project<a/>: developing a computer from scratch with its <a href="https://github.com/Open-Machine/Assembler">assembler<a/> and compiler.
+<i>This repository is part of a <a href="https://github.com/Open-Machine/">larger project</a>: developing a computer from scratch with its <a href="https://github.com/Open-Machine/Assembler">assembler</a> and compiler.
 
 </div>
 
@@ -27,7 +27,7 @@
 ### 1. [✔ Todo](#-todo)
 ### 2. [💻 How does a computer work behind the curtains? (WIP)](#-how-does-a-computer-work-behind-the-curtains-wip)
 ### 3. [🔢 Machine Code](#-machine-code)
-### 4. [▶️ Execute the machine](#️-execute-the-machine)
+### 4. [▶️ Run](#️-run)
 ### 5. [📄 Contributing Guidelines](#-contributing-guidelines)
 
 ---
@@ -84,34 +84,115 @@ EE | Represents a memory index
 ### Instructions Table
 Machine Code | Short Instruction Description | Long Instruction Description | Short Param Description | Long Param Description
 --- | --- | --- | --- | ---
-0x0 | - | This instruction doesn't perform any action | - | No parameter is required
-0x1 | [ACC] = [EE] | A value from the memory is copied to the ACC register | variable | Memory address of a variable that will be used in the instruction
-0x2 | [EE] = [ACC] | The value from the ACC register is stored into memory | variable | Memory address of a variable that will be used in the instruction
-0x3 | [ACC] = [ACC] + [EE] | The sum of the value of the ACC register and a value from the memory is stored in the ACC register | variable | Memory address of a variable that will be used in the instruction
-0x4 | [ACC] = [ACC] - [EE] | The difference between the value of the ACC register and a value from the memory is stored in the ACC register | variable | Memory address of a variable that will be used in the instruction
-0x7 | [EE] = input value | The input value is copied to the memory | variable | Memory address of a variable that will be used in the instruction
+0x0 | - | This instruction **doesn't perform any action** | - | No parameter is required
+0x1 | [ACC] = [EE] | A value from the memory is **copied** to the **ACC** register | variable | Memory address of a variable that will be used in the instruction
+0x2 | [EE] = [ACC] | The value from the ACC register is **stored** into **memory** | variable | Memory address of a variable that will be used in the instruction
+0x3 | [ACC] = [ACC] + [EE] | The **sum** of the value of the **ACC** register and a value from the memory is stored in the ACC register | variable | Memory address of a variable that will be used in the instruction
+0x4 | [ACC] = [ACC] - [EE] | The **difference** between the value of the ACC register and a value from the memory is stored in the ACC register | variable | Memory address of a variable that will be used in the instruction
+0x7 | [EE] = input value | The **input** value is copied to the **memory** | variable | Memory address of a variable that will be used in the instruction
 0x8 | Output [EE] | Outputs a value from the memory into the circuit LEDs | variable | Memory address of a variable that will be used in the instruction
-0x9 | Finishes program | When this instruction is encountered, the program is finished and no more instructions will be executed | - | No parameter is required
-0xa | Jump to EE | Jump to another line of code | instruction | Memory address of a instruction the program will jump to
-0xb | Jump to EE if [ACC] > 0 | Jump to another line of code if the value of the ACC register is positive | instruction | Memory address of a instruction the program will jump to if the condition is right
-0xd | Jump to EE if [ACC] = 0 | Jump to another line of code if the value of the ACC register is zero | instruction | Memory address of a instruction the program will jump to if the condition is right
-0xf | Jump to EE if [ACC] < 0 | Jump to another line of code if the value of the ACC register is negative | instruction | Memory address of a instruction the program will jump to if the condition is right
-
-## Machine Code Example
-```sh
-01ff # copy value in the address ff in RAM
-020a # stores the value of AC in the address 0a
-0900 # kills program
-```
-
-## Tips
-- Remember to add the ```0x9``` instruction at the end of your programs
+0x9 | Finishes program | When this instruction is encountered, the **program is finished** and no more instructions will be executed | - | No parameter is required
+0xa | Jump to EE | **Jump** to another line of code | instruction | Memory address of a instruction the program will jump to
+0xb | Jump to EE if [ACC] > 0 | **Jump** to another line of code **if** the value of the ACC register is **positive** | instruction | Memory address of a instruction the program will jump to if the condition is right
+0xd | Jump to EE if [ACC] = 0 | **Jump** to another line of code **if** the value of the ACC register is **zero** | instruction | Memory address of a instruction the program will jump to if the condition is right
+0xf | Jump to EE if [ACC] < 0 | **Jump** to another line of code **if** the value of the ACC register is **negative** | instruction | Memory address of a instruction the program will jump to if the condition is right
 
 ---
 
-# ▶️ Execute the machine
+# 🔀 Code Flow
+This section will help you think more in an assembly way.
 
-#### If you want to see it working
+Because Open-Machine's Circuit only has very simple commands and very few registers, the way to think about your assembly code has to be very different.
+
+### Storage
+The circuit has two components that store data: the ACC register and the memory RAM. Both of these are volatile memories, which means that when the circuit is turned the data lost. Let's take a closer look in the memories available and when they should be used:
+- **RAM**: is the main memory, it can store thousands of bits and every variable should be stored here.
+- **ACC register**: is an auxiliary memory for arithmetic operations that can store only one value. It must not store variables indefinitely. 
+
+	Most CPUs have many registers, so in those cases some registers can be used to store variables indefinitely. However, since Open-Computer's circuit only offers one register, it must be used exclusively as an auxiliary memory for the instructions.
+
+### Operation Flow
+Since the circuit has only one register, the flow of the operations will be a little bit different, following a pattern somewhat similar to:
+
+1. Change the value of ACC register
+2. Do an instruction
+3. Store the value of the ACC register in RAM
+
+**For example**, if you want to sum variables A and B and store the result in C you could use the following instructions:
+1. Copy the value of variable A to the ACC register
+2. Use the sum instruction to sum the value of ACC register with B and store the result in the ACC register
+3. Store the value of the ACC register in C memory address
+
+### IFs, WHILEs, FORs and procedures
+If that's your first time programming assembly, it must be very strange to know that there are no ```if```s, ```while```s and ```for```s. However, it's not that hard not having those keywords, because all of those things can be done with the combination arithmetic operations and conditional and unconditional jumps.
+
+Let me show you an example. Imagine you have this code written in C and wanted to translate it to assembly.
+```c
+	// before
+	if (a > b) {
+		// ...
+	}
+	// after
+```
+One way of doing it would be:
+1. **Copy** the value of ```a``` from RAM to the ACC register
+2. Update the value of the ACC register with the result of the ```subtraction``` between the value of the ACC register and ```b```
+3. **Jump** to **step 5** if the ACC register is greater than zero
+4. One or more instructions inside the ```if``` statement
+	
+	```c
+	// after
+	```
+
+5. After instructions
+
+	```c
+	// after
+	```
+
+### More tips
+- Remember to add the **kill** instruction at the **end of your program** to kill the execution
+
+---
+
+# Machine Code Example
+The following assembly code gets two numbers from input and outputs the sum of them. If the sum is greater than zero it will output zero.
+
+*ps: Since the ```input``` instruction doesn't wait for a change, expect the output to be zero.*
+
+01ff # copy value in the address ff in RAM
+020a # stores the value of AC in the address 0a
+0900 # kills program
+```sh
+# data inputs
+7055
+7056
+
+# sum
+1055
+3056
+2057
+
+# output
+8057
+
+# if output higher than zero, it will output zero
+1057
+d00b # if=0
+f00b # if<0
+80ff # [0xff] is zero since we didn't change it
+
+9000
+```
+
+---
+
+# ▶️ Run
+In this section, you will see how to execute the circuit in the GUI.
+
+You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an introduction to Logisim-Evolution, which is the program we will be using to simulate the circuit.
+
+### Start the circuit
 1. Run the machine:
 	```sh
 	java -jar logisim-evolution.jar
@@ -119,21 +200,16 @@ Machine Code | Short Instruction Description | Long Instruction Description | Sh
 2. Import the circuit file by navigating the menu:
    *```File -> Open -> Select main.circ from the repository folder```*
 3. Open Main file on the left side of Logisim
-4. Paste the executable code into the beginning of the RAM. You may want to change some values of the memory as if you were initializing variables.
-5. Run the Program by navigating the menu:
+
+### Program the circuit
+1. Run the circuit. Follow [these](#) steps
+2. Paste the executable code into the beginning of the RAM. You may want to change some values of the memory as if you were initializing variables.
+
+### Run the circuit
+3. Run the Program by navigating the menu:
    *```Simulate -> Enable 'Ticks Enabled'```*
    - You can change the speed of the program by navigating the menu: 
 	*```Simulate -> Tick Frequency -> To get the fastest execution, select the top item```*
-
-#### If you only want to see the outputs (only available for the executables generated by the assembler and the compiler)
-*⚠️ Warning: Logisim-Evolution is not that stable when it comes to executing it without the graphics!*
-1. Run the machine with your program (replace ```executableFile``` with the executable file name generated by the assembler or the compiler):
-	```sh
-	java -jar logisim-evolution.jar main.circ -load executableFile -tty table
-	```
-2. The outputs will appear on the console.
-   - Ignore the first output
-   - The outputs will follow the pattern: ```{16 bits of the main output}     {4 bit ouptut counter}```
 
 ---
 
