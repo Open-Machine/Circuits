@@ -205,7 +205,7 @@ In this section, you will see how to execute the circuit in the GUI.
 
 You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an introduction to Logisim-Evolution, which is the program we will be using to simulate the circuit.
 
-### i. Start the circuit
+### I. Start the circuit
 1. Run the machine:
 	```sh
 	java -jar logisim-evolution.jar
@@ -214,15 +214,14 @@ You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an in
    *```File -> Open -> Select main.circ from the repository folder```*
 3. Open Main file on the left side of Logisim
 
-### ii. Program the circuit
+### II. Program the circuit
 1. Run the circuit. Follow [these](#) steps
 2. Paste the executable code into the beginning of the RAM. You may want to change some values of the memory as if you were initializing variables.
 
-### iii. Run the circuit
-3. Run the Program by navigating the menu:
-   *```Simulate -> Enable 'Ticks Enabled'```*
+### III. Run the circuit
+3. Run the Program by navigating the menu: *```Simulate -> Enable 'Ticks Enabled'```*
    - You can change the speed of the program by navigating the menu: 
-	*```Simulate -> Tick Frequency -> To get the fastest execution, select the top item```*
+	*```Simulate -> Tick Frequency```*. ***To get the fastest execution, select the top item.***
 
 <br/>
 
