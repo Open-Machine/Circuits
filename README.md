@@ -214,4 +214,4 @@ You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an in
 ---
 
 # 📄 Contributing Guidelines
-Check out the contributing guidelines [here](https://github.com/Open-Machine/Circuits/blob/master/CONTRIBUTION.md).
+Check out the contributing guidelines [here](https://github.com/Open-Machine/Circuits/blob/master/CONTRIBUTING.md).
