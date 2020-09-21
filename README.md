@@ -58,12 +58,11 @@ RAM is a temporary memory, which means that when the computer is turned off, all
 #### Disk
 Disk is a permanent memory, which means that it is used to store data that shouldn't be deleted after turning it off. However, it is slower than RAM. The disk can be an Hard Drive (HD) or Solid-State Drive (SSD).
 
-*ps: Since the Open-Computer won't only runs a single application*
-
 #### Input/Output Devices
 For an actual computer to work, you also need input devices such as keyboard and mouse, and output devices such as screen.
 
 <br/>
+
 *ps: Since the Open-Computer's is a basic computer, complex input and output devices and disk were chosen not to be implemented. However, the plan is to build it on the future.*
 
 <br/>
