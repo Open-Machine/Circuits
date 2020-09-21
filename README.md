@@ -28,7 +28,7 @@
 # 🔖 Table of Contents
 ### 1. [💻 How does a computer work behind the curtains?](#-how-does-a-computer-work-behind-the-curtains)
 ### 2. [🔢 Machine Code](#-machine-code)
-### 3. [🔀 Code Flow and Tips](#-code-flow)
+### 3. [🔀 Code Flow and Tips](#-code-flow-and-tips)
 ### 4. [👨🏻‍💻 Machine Code Example](#-machine-code-example)
 ### 5. [▶️ Run](#️-run)
 ### 6. [📄 Contributing Guidelines](#-contributing-guidelines)
