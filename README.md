@@ -25,12 +25,13 @@
 
 <br/>
 
-<!-- omit in toc -->
 # 🔖 Table of Contents
 ### 1. [💻 How does a computer work behind the curtains?](#-how-does-a-computer-work-behind-the-curtains)
 ### 2. [🔢 Machine Code](#-machine-code)
-### 3. [▶️ Run](#️-run)
-### 4. [📄 Contributing Guidelines](#-contributing-guidelines)
+### 3. [🔀 Code Flow and Tips](#-code-flow)
+### 4. [👨🏻‍💻 Machine Code Example](#-machine-code-example)
+### 5. [▶️ Run](#️-run)
+### 6. [📄 Contributing Guidelines](#-contributing-guidelines)
 
 <br/>
 
@@ -73,7 +74,7 @@ For an actual computer to work, you also need input devices such as keyboard and
 
 # 🔢 Machine Code
 
-A machine code command takes 16 bits in which first 4 bits represent the instruction and the following 12 bits are the parameter. For example, in the command ```0x1202```, the instruction is ```0x1``` and the parameter is ```0x202```.
+Let's take a close look at the instructions available. A machine code command takes 16 bits in which first 4 bits represent the instruction and the following 12 bits are the parameter. For example, in the command ```0x1202```, the instruction is ```0x1``` and the parameter is ```0x202```.
 
 ## Instructions Table
 Let's look at all of the instructions at our disposal.
@@ -107,7 +108,7 @@ Machine Code | Short Instruction Description | Long Instruction Description | Sh
 
 <br/>
 
-# 🔀 Code Flow
+# 🔀 Code Flow and Tips
 This section will help you think more in an assembly way.
 
 Because Open-Machine's Circuit only has very simple commands and very few registers, the way to think about your assembly code has to be very different.
@@ -167,7 +168,7 @@ One way of doing it would be:
 
 <br/>
 
-# Machine Code Example
+# 👨🏻‍💻 Machine Code Example
 The following assembly code gets two numbers from input and outputs the sum of them. If the sum is greater than zero it will output zero.
 
 *ps: Remember to change the input before starting the clock simulation, because the ```input``` instruction doesn't wait for anything to happen to get the input data.*
