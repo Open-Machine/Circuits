@@ -149,7 +149,7 @@ One way of doing it would be:
 4. One or more instructions inside the ```if``` statement
 	
 	```c
-	// after
+	// ...
 	```
 
 5. After instructions
