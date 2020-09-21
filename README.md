@@ -1,5 +1,8 @@
-<h1 align="center">Open Machine's Circuits</i></h1>
-<div align="center">
+<div align="center"> 
+<h1>Open Machine's Circuits</h1>
+<h4>Circuits of a basic computer.</h4>
+
+<i>This repository is a component of a larger project: <b><a href="https://github.com/Open-Machine/README">Open-Machine</a></b> - an open-source computer developed from scratch.</i>
 
 <a href="https://github.com/Open-Machine/Circuits/stargazers"><img src="https://img.shields.io/github/stars/Open-Machine/Circuits" alt="Stars Badge"/></a>
 <a href="https://github.com/Open-Machine/Circuits/network/members"><img src="https://img.shields.io/github/forks/Open-Machine/Circuits" alt="Forks Badge"/></a>
@@ -13,39 +16,31 @@
 <img src="https://raw.githubusercontent.com/Open-Machine/README/stable/Media/logo-horizontal.png" alt="open-machine"/>
 
 <br/>
-<i>The goal is to to design and build a computer from scratch only using logical gates to do so.</i>
-<br/>
-
-<i>This repository is part of a <a href="https://github.com/Open-Machine/">larger project</a>: developing a computer from scratch with its <a href="https://github.com/Open-Machine/Assembler">assembler</a> and compiler.
 
 </div>
 
+<br/>
+
 ---
+
+<br/>
 
 <!-- omit in toc -->
 # 🔖 Table of Contents
-### 1. [✔ Todo](#-todo)
-### 2. [💻 How does a computer work behind the curtains? (WIP)](#-how-does-a-computer-work-behind-the-curtains-wip)
-### 3. [🔢 Machine Code](#-machine-code)
-### 4. [▶️ Run](#️-run)
-### 5. [📄 Contributing Guidelines](#-contributing-guidelines)
+### 1. [💻 How does a computer work behind the curtains?](#-how-does-a-computer-work-behind-the-curtains)
+### 2. [🔢 Machine Code](#-machine-code)
+### 3. [▶️ Run](#️-run)
+### 4. [📄 Contributing Guidelines](#-contributing-guidelines)
+
+<br/>
 
 ---
 
-# ✔ Todo
-- [X] 8 bit core
-- [X] 16 bit core
-- [X] Signed integer
-- [ ] Float
-- [ ] Division circuit and instruction
-- [ ] Custom registers
-- [ ] Custom clock
-- [ ] Custom RAM
+<br/>
 
----
+# 💻 How does a computer work behind the curtains?
 
-# 💻 How does a computer work behind the curtains? (WIP)
-Developers usually have a good understanding of how a computer works. However, for me at least understanding a computer so deeply that you would be able to actually build one yourself seemed like an impossible task. So, in this section I want to break to you the most important pieces of the computer puzzle that you need to know in order to build your own computer from scratch using only circuits.
+Of course, I don't know and won't tell you everything about how a computer works. However, let's take a closer look to the its components and main functions so you know at least what you are looking at when running the circuit simulation.
 
 ## Circuit Components
 
@@ -60,27 +55,37 @@ The CPU is the brain of the computer, where every instruction is processed. It i
 #### Random Access Memory (RAM)
 RAM is a temporary memory, which means that when the computer is turned off, all of its data is lost. However, it is very fast and serves, among other things, to store variables during the execution of programs.
 
-#### Disk (not implemented in the circuit yet)
-Disk is a permanent memory, which means that it is used to store data that shouldn't be deleted after turning it off. However, it is slower than RAM.
+#### Disk
+Disk is a permanent memory, which means that it is used to store data that shouldn't be deleted after turning it off. However, it is slower than RAM. The disk can be an Hard Drive (HD) or Solid-State Drive (SSD).
 
-The disk can be an Hard Drive (HD) or Solid-State Drive (SSD).
+*ps: Since the Open-Computer won't only runs a single application*
 
-#### Input/Output Devices (not implemented in the circuit yet)
+#### Input/Output Devices
 For an actual computer to work, you also need input devices such as keyboard and mouse, and output devices such as screen.
 
+<br/>
+*ps: Since the Open-Computer's is a basic computer, complex input and output devices and disk were chosen not to be implemented. However, the plan is to build it on the future.*
+
+<br/>
+
 ---
+
+<br/>
 
 # 🔢 Machine Code
 
 A machine code command takes 16 bits in which first 4 bits represent the instruction and the following 12 bits are the parameter. For example, in the command ```0x1202```, the instruction is ```0x1``` and the parameter is ```0x202```.
 
 ## Instructions Table
+Let's look at all of the instructions at our disposal.
+
 ### Symbols Legend for the Instructions Table
 Symbol | Explanation
 --- | ---
 ACC | The ACC register
 EE | Represents a memory index
 [ ] | "Value of"
+
 ### Instructions Table
 Machine Code | Short Instruction Description | Long Instruction Description | Short Param Description | Long Param Description
 --- | --- | --- | --- | ---
@@ -97,7 +102,11 @@ Machine Code | Short Instruction Description | Long Instruction Description | Sh
 0xd | Jump to EE if [ACC] = 0 | **Jump** to another line of code **if** the value of the ACC register is **zero** | instruction | Memory address of a instruction the program will jump to if the condition is right
 0xf | Jump to EE if [ACC] < 0 | **Jump** to another line of code **if** the value of the ACC register is **negative** | instruction | Memory address of a instruction the program will jump to if the condition is right
 
+<br/>
+
 ---
+
+<br/>
 
 # 🔀 Code Flow
 This section will help you think more in an assembly way.
@@ -153,16 +162,17 @@ One way of doing it would be:
 ### More tips
 - Remember to add the **kill** instruction at the **end of your program** to kill the execution
 
+<br/>
+
 ---
+
+<br/>
 
 # Machine Code Example
 The following assembly code gets two numbers from input and outputs the sum of them. If the sum is greater than zero it will output zero.
 
-*ps: Since the ```input``` instruction doesn't wait for a change, expect the output to be zero.*
+*ps: Remember to change the input before starting the clock simulation, because the ```input``` instruction doesn't wait for anything to happen to get the input data.*
 
-01ff # copy value in the address ff in RAM
-020a # stores the value of AC in the address 0a
-0900 # kills program
 ```sh
 # data inputs
 7055
@@ -185,14 +195,18 @@ f00b # if<0
 9000
 ```
 
+<br/>
+
 ---
+
+<br/>
 
 # ▶️ Run
 In this section, you will see how to execute the circuit in the GUI.
 
 You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an introduction to Logisim-Evolution, which is the program we will be using to simulate the circuit.
 
-### Start the circuit
+### I. Start the circuit
 1. Run the machine:
 	```sh
 	java -jar logisim-evolution.jar
@@ -201,17 +215,21 @@ You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an in
    *```File -> Open -> Select main.circ from the repository folder```*
 3. Open Main file on the left side of Logisim
 
-### Program the circuit
+### II. Program the circuit
 1. Run the circuit. Follow [these](#) steps
 2. Paste the executable code into the beginning of the RAM. You may want to change some values of the memory as if you were initializing variables.
 
-### Run the circuit
+### III. Run the circuit
 3. Run the Program by navigating the menu:
    *```Simulate -> Enable 'Ticks Enabled'```*
    - You can change the speed of the program by navigating the menu: 
 	*```Simulate -> Tick Frequency -> To get the fastest execution, select the top item```*
 
+<br/>
+
 ---
+
+<br/>
 
 # 📄 Contributing Guidelines
 Check out the contributing guidelines [here](https://github.com/Open-Machine/Circuits/blob/master/CONTRIBUTING.md).
