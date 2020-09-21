@@ -74,7 +74,7 @@ For an actual computer to work, you also need input devices such as keyboard and
 
 # 🔢 Machine Code
 
-A machine code command takes 16 bits in which first 4 bits represent the instruction and the following 12 bits are the parameter. For example, in the command ```0x1202```, the instruction is ```0x1``` and the parameter is ```0x202```.
+Let's take a close look at the instructions available. A machine code command takes 16 bits in which first 4 bits represent the instruction and the following 12 bits are the parameter. For example, in the command ```0x1202```, the instruction is ```0x1``` and the parameter is ```0x202```.
 
 ## Instructions Table
 Let's look at all of the instructions at our disposal.
