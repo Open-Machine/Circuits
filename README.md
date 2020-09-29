@@ -216,8 +216,9 @@ You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an in
 3. Open Main file on the left side of Logisim
 
 ### II. Program the circuit
-1. Run the circuit. Follow [these](#) steps
-2. Paste the executable code into the beginning of the RAM. You may want to change some values of the memory as if you were initializing variables.
+1. Right-click on the RAM component and select ```Edit Contents```
+2. Paste the machine code you wrote at the beginning of the RAM
+3. You may want to change some values of the memory as if you were initializing variables
 
 ### III. Run the circuit
 3. Run the Program by navigating the menu: *```Simulate -> Enable 'Ticks Enabled'```*
