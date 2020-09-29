@@ -29,7 +29,7 @@
 ### 1. [💻 How does a computer work behind the curtains?](#-how-does-a-computer-work-behind-the-curtains)
 ### 2. [🔢 Machine Code](#-machine-code)
 ### 3. [🔀 Code Flow and Tips](#-code-flow-and-tips)
-### 4. [👨🏻‍💻 Machine Code Example](#-machine-code-example)
+### 4. [⌨️ Machine Code Example](#-machine-code-example)
 ### 5. [▶️ Run](#️-run)
 ### 6. [📄 Contributing Guidelines](#-contributing-guidelines)
 
@@ -168,7 +168,7 @@ One way of doing it would be:
 
 <br/>
 
-# 👨🏻‍💻 Machine Code Example
+# ⌨️ Machine Code Example
 The following assembly code gets two numbers from input and outputs the sum of them. If the sum is greater than zero it will output zero.
 
 *ps: Remember to change the input before starting the clock simulation, because the ```input``` instruction doesn't wait for anything to happen to get the input data.*
