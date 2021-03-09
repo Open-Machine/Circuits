@@ -31,7 +31,8 @@
 ### 3. [🔀 Code Flow and Tips](#-code-flow-and-tips)
 ### 4. [⌨️ Machine Code Example](#-machine-code-example)
 ### 5. [▶️ Run](#️-run)
-### 6. [📄 Contributing Guidelines](#-contributing-guidelines)
+### 6. [▶️ Test](#️-test)
+### 7. [📄 Contributing Guidelines](#-contributing-guidelines)
 
 <br/>
 
@@ -224,6 +225,18 @@ You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an in
 3. Run the Program by navigating the menu: *```Simulate -> Enable 'Ticks Enabled'```*
    - You can change the speed of the program by navigating the menu: 
 	*```Simulate -> Tick Frequency```*. ***To get the fastest execution, select the top item.***
+
+<br/>
+
+---
+
+<br/>
+
+# ▶️ Test
+To test the circuit, run the following command:
+```sh
+./test/test.sh
+```
 
 <br/>
 
