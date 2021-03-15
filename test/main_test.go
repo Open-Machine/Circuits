@@ -5,7 +5,14 @@ import (
 	"os"
 	"strings"
 	"testing"
+	"time"
 )
+
+func getInput(input chan string, scanner *bufio.Scanner) {
+	scanner.Scan()
+	line := scanner.Text()
+	input <- line
+}
 
 func TestProgram(t *testing.T) {
 	stdout, err := runProgram("program")
@@ -14,23 +21,29 @@ func TestProgram(t *testing.T) {
 		os.Exit(1)
 	}
 
-	expected := []string{"1335", "EECD", "1234", "f000", "0000", "f000", "0001", "0000", "0001", "8888"}
+	expected := []string{"ffff", "1335", "EECD", "1234", "f000", "0000", "f000", "0001", "0000", "0001", "8888"}
 
 	scanner := bufio.NewScanner(stdout)
 	scanner.Scan() // ignores first print
 	var i = 0
-	for scanner.Scan() {
-		line := scanner.Text()
+	for {
+		input := make(chan string, 1)
+		go getInput(input, scanner)
 
-		binaryStr := strings.ReplaceAll(line, " ", "")[0:16]
-		gotNum, errBinary := binaryStringToNumber(binaryStr)
+		select {
+		case line := <-input:
+			binaryStr := strings.ReplaceAll(line, " ", "")[0:16]
+			gotNum, errBinary := binaryStringToNumber(binaryStr)
 
-		expectedNum, errHex := hexStringToNumber(expected[i])
+			expectedNum, errHex := hexStringToNumber(expected[i])
 
-		if errBinary != nil || errHex != nil {
-			t.Errorf("Parsing error. ErrBinary: '%t', ErrHex: '%t'.", errBinary, errHex)
-		} else if gotNum != expectedNum {
-			t.Errorf("Got different then expected. Expected: %d, but got: %d.\n", expectedNum, gotNum)
+			if errBinary != nil || errHex != nil {
+				t.Errorf("[%d] Parsing error. ErrBinary: '%t', ErrHex: '%t'.", i, errBinary, errHex)
+			} else if gotNum != expectedNum {
+				t.Errorf("[%d] Got different then expected. Expected: %d, but got: %d.\n", i, expectedNum, gotNum)
+			}
+		case <-time.After(3000 * time.Millisecond):
+			t.FailNow()
 		}
 
 		i++
