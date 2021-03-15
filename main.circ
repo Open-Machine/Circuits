@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project source="2.14.6" version="1.0">
-This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
-<lib desc="#Wiring" name="0"/>
+  This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
+
+  <lib desc="#Wiring" name="0"/>
   <lib desc="#Gates" name="1"/>
   <lib desc="#Plexers" name="2">
     <tool name="Multiplexer">
@@ -133,9 +134,9 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(720,840)" to="(930,840)"/>
     <wire from="(890,980)" to="(890,1020)"/>
     <wire from="(310,1030)" to="(470,1030)"/>
-    <wire from="(1510,470)" to="(1510,840)"/>
-    <wire from="(1110,450)" to="(1250,450)"/>
     <wire from="(620,390)" to="(960,390)"/>
+    <wire from="(1110,450)" to="(1250,450)"/>
+    <wire from="(1510,470)" to="(1510,840)"/>
     <wire from="(1030,880)" to="(1040,880)"/>
     <wire from="(720,680)" to="(740,680)"/>
     <wire from="(630,590)" to="(840,590)"/>
@@ -310,12 +311,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="text" val="address"/>
       <a name="font" val="SansSerif plain 12"/>
     </comp>
-    <comp lib="4" loc="(1250,390)" name="RAM">
-      <a name="addrWidth" val="12"/>
-      <a name="dataWidth" val="16"/>
-      <a name="trigger" val="high"/>
-      <a name="labelvisible" val="true"/>
-    </comp>
     <comp lib="2" loc="(990,400)" name="Multiplexer">
       <a name="width" val="12"/>
       <a name="enable" val="false"/>
@@ -370,6 +365,12 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="text" val="overflow"/>
       <a name="font" val="SansSerif plain 12"/>
     </comp>
+    <comp lib="4" loc="(1250,390)" name="RAM">
+      <a name="addrWidth" val="12"/>
+      <a name="dataWidth" val="16"/>
+      <a name="trigger" val="high"/>
+      <a name="labelvisible" val="true"/>
+    </comp>
   </circuit>
   <circuit name="UC">
     <a name="circuit" val="UC"/>
@@ -414,7 +415,7 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(990,700)" to="(1110,700)"/>
     <wire from="(1180,580)" to="(1180,670)"/>
     <wire from="(180,750)" to="(180,760)"/>
-    <wire from="(130,200)" to="(250,200)"/>
+    <wire from="(130,160)" to="(250,160)"/>
     <wire from="(510,930)" to="(550,930)"/>
     <wire from="(570,1070)" to="(610,1070)"/>
     <wire from="(1020,580)" to="(1020,670)"/>
@@ -429,6 +430,7 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(640,1200)" to="(660,1200)"/>
     <wire from="(1100,590)" to="(1110,590)"/>
     <wire from="(1200,470)" to="(1660,470)"/>
+    <wire from="(280,200)" to="(280,810)"/>
     <wire from="(1200,510)" to="(2230,510)"/>
     <wire from="(520,950)" to="(550,950)"/>
     <wire from="(580,1090)" to="(610,1090)"/>
@@ -447,7 +449,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(610,1030)" to="(610,1040)"/>
     <wire from="(1130,750)" to="(1130,770)"/>
     <wire from="(1070,620)" to="(1110,620)"/>
-    <wire from="(280,160)" to="(280,810)"/>
     <wire from="(960,700)" to="(960,730)"/>
     <wire from="(620,1210)" to="(660,1210)"/>
     <wire from="(1060,500)" to="(1060,630)"/>
@@ -488,8 +489,8 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(530,910)" to="(550,910)"/>
     <wire from="(590,1050)" to="(610,1050)"/>
     <wire from="(970,680)" to="(970,720)"/>
-    <wire from="(130,160)" to="(280,160)"/>
     <wire from="(630,1240)" to="(660,1240)"/>
+    <wire from="(130,200)" to="(280,200)"/>
     <wire from="(180,760)" to="(200,760)"/>
     <wire from="(980,710)" to="(1110,710)"/>
     <wire from="(1080,610)" to="(1110,610)"/>
@@ -686,14 +687,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <comp lib="4" loc="(80,150)" name="T Flip-Flop">
       <a name="trigger" val="falling"/>
     </comp>
-    <comp lib="6" loc="(199,149)" name="Text">
-      <a name="text" val="instruction phase"/>
-      <a name="font" val="SansSerif plain 12"/>
-    </comp>
-    <comp lib="6" loc="(195,190)" name="Text">
-      <a name="text" val="fetch phase"/>
-      <a name="font" val="SansSerif plain 12"/>
-    </comp>
     <comp lib="0" loc="(60,160)" name="Constant"/>
     <comp lib="0" loc="(630,950)" name="Splitter">
       <a name="facing" val="west"/>
@@ -838,6 +831,14 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     </comp>
     <comp lib="6" loc="(368,1206)" name="Text">
       <a name="text" val="Jump to EE if [ACC] &lt; 0"/>
+      <a name="font" val="SansSerif plain 12"/>
+    </comp>
+    <comp lib="6" loc="(196,189)" name="Text">
+      <a name="text" val="instruction phase"/>
+      <a name="font" val="SansSerif plain 12"/>
+    </comp>
+    <comp lib="6" loc="(192,149)" name="Text">
+      <a name="text" val="fetch phase"/>
       <a name="font" val="SansSerif plain 12"/>
     </comp>
   </circuit>
