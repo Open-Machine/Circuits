@@ -1,9 +1,8 @@
 # Test
 
-## Run
+## Run Test
 ```sh
-go run main.go # from main.go
-go test # from main_test.go
+go test
 ```
 
 ---
