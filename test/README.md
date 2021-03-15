@@ -12,7 +12,7 @@ Code: 16 bits = instruction (4 bits) + parameter (12 bits). For example, in the 
 
 ### Ram
 ```
-0000 code 9000 0000x10 memory
+code 9000 0000x10 memory
 ```
 
 ### Memory
@@ -30,6 +30,14 @@ ffff # max (0x38)
 
 ### Code
 ```sh
+
+{test execution of first command}
+
+8038
+{expect print 0xffff=65535}
+
+---
+
 {test sum and subtraction: 0x3 and 0x4}
 {switch a and b and print a position}
 
@@ -40,7 +48,7 @@ ffff # max (0x38)
 # print a + b (3-4)
 2032
 8032
-{expect 0x1335=4917}
+{expect print 0x1335=4917}
 
 # a - b (5-6)
 1033
@@ -49,7 +57,7 @@ ffff # max (0x38)
 # print a - b (7-8)
 2032
 8032
-{expect 0xEECD=61133}
+{expect print 0xEECD=61133}
 
 ---
 
@@ -70,7 +78,7 @@ ffff # max (0x38)
 
 # print b (F)
 8033
-{expect 0x1234=4660}
+{expect print 0x1234=4660}
 
 ---
 
