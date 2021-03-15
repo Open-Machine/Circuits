@@ -16,7 +16,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	expected := []string{"1335", "EECD", "1234", "ffff", "ffff", "ffff", "ffff", "ffff", "ffff", "8888"}
+	expected := []string{"1335", "EECD", "1234", "f000", "0000", "f000", "0001", "0000", "0001", "8888"}
+
+	fmt.Printf("started!\n")
 
 	scanner := bufio.NewScanner(stdout)
 	scanner.Scan() // ignores first print
@@ -31,16 +33,15 @@ func main() {
 
 		if errBinary != nil || errHex != nil {
 			fmt.Printf("Parsing error. ErrBinary: '%t', ErrHex: '%t'.", errBinary, errHex)
-		}
-		if gotNum != expectedNum {
+		} else if gotNum != expectedNum {
 			fmt.Printf("Got different then expected. Expected: %d, but got: %d.\n", expectedNum, gotNum)
+		} else {
+			fmt.Printf("%d is right!\n", i)
 		}
 
 		i++
+		fmt.Printf("len(expected) == i || %d == %d || expected: %d\n", len(expected), i, expectedNum)
 		if len(expected) == i {
-			if scanner.Scan() {
-				fmt.Printf("Size is different")
-			}
 			fmt.Print("breaked")
 			break
 		}

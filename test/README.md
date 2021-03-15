@@ -1,5 +1,14 @@
 # Test
 
+## Run
+```sh
+go run main.go # from main.go
+go test # from main_test.go
+```
+
+---
+
+## Code Explanation
 Code: 16 bits = instruction (4 bits) + parameter (12 bits). For example, in the command ```0x1202```, the instruction is ```0x1``` and the parameter is ```0x202```.
 
 ### Ram
@@ -8,16 +17,16 @@ Code: 16 bits = instruction (4 bits) + parameter (12 bits). For example, in the 
 ```
 
 ### Memory
-50th = 32 = next
+50th = 0x32 = next
 ```sh
-0000 # aux (32)
-0101 # a (33)
-1234 # b (34)
-0000 # zero (35)
-0001 # positive (36)
-f000 # negative (37)
-ffff # max (38)
-8888 # end (39)
+0000 # aux (0x32)
+0101 # a (0x33)
+1234 # b (0x34)
+0000 # zero (0x35)
+0001 # positive (0x36)
+f000 # negative (0x37)
+ffff # max (0x38)
+8888 # end (0x39)
 ```
 
 ### Code
@@ -32,105 +41,109 @@ ffff # max (38)
 # print a + b (3-4)
 2032
 8032
-{expect 1335}
+{expect 0x1335=4917}
 
 # a - b (5-6)
 1033
 4034
-{expect EECD}
+
+# print a - b (7-8)
+2032
+8032
+{expect 0xEECD=61133}
 
 ---
 
 {test get and update memory: 0x1 and 0x2}
 {switch a and b and print a position}
 
-# aux = a (7-8)
+# aux = a (9-A)
 1033
 2032
 
-# a = b (9-A)
+# a = b (B-C)
 1034
 2033
 
-# b = aux (B-C)
+# b = aux (D-E)
 1032
 2034
 
-# print b (D)
+# print b (F)
 8033
-{expect 1234}
+{expect 0x1234=4660}
 
 ---
 
 {test jumps}
 
-# always jump (E-F)
-a010
+# always jump (10-11)
+a012
 8038
 {doesnt expect print}
 
 
-# jump > 0 for negative (10-12)
+# jump > 0 for negative (12-14)
 1037
-b013
-8038
-{expect print ffff}
+b015
+8037
+{expect print 0xf000=61440}
 
-# jump > 0 for zero (13-15)
+# jump > 0 for zero (15-17)
 1035
-b016
-8038
-{expect print ffff}
+b018
+8035
+{expect print 0x0000=0}
 
-# jump > 0 for positive (16-18)
+# jump > 0 for positive (18-1A)
 1036
-b019
+b01B
 8038
 {doesnt expect print}
 
 
-# jump = 0 for negative (19-1B)
+# jump = 0 for negative (1B-1D)
 1037
-d01B
-8038
-{expect print ffff}
+d01E
+8037
+{expect print 0xf000=61440}
 
-# jump = 0 for positive (1C-1E)
+# jump = 0 for positive (1E-20)
 1036
-d01F
-8038
-{expect print ffff}
+d021
+8036
+{expect print 0x0001=1}
 
-# jump = 0 for zero (1F-21)
+# jump = 0 for zero (21-23)
 1035
-d022
+d024
 8038
 {doesnt expect print}
 
 
-# jump < 0 for zero (22-24)
+# jump < 0 for zero (24-26)
 1035
-f025
-8038
-{expect print ffff}
+f027
+8035
+{expect print 0x0000=0}
 
-# jump < 0 for positive (25-27)
+# jump < 0 for positive (27-29)
 1036
-f028
-8038
-{expect print ffff}
+f02A
+8036
+{expect print 0x0001=1}
 
-# jump < 0 for negative (28-2A)
+# jump < 0 for negative (2A-2C)
 1037
-f02B
+f02D
 8038
 {doesnt expect print}
 
 ---
 
-# kill (2B-2C)
+# kill (2D-2E)
 8039
-{expect 8888}
+{expect print 0x8888=34952}
 9000
 
 ```

@@ -233,10 +233,7 @@ You can watch [this video](https://www.youtube.com/watch?v=NAITQqdOw7c) as an in
 <br/>
 
 # ▶️ Test
-To test the circuit, run the following command:
-```sh
-./test/test.sh
-```
+To test the circuit, visit [README Test](test/README.md).
 
 <br/>
 
